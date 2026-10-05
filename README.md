@@ -4,8 +4,8 @@
 
 | 파일 | 용도 |
 |---|---|
-| `thumbnail.py` | 소현 양식 대표 이미지(1080x1350) 생성 |
-| `fonts/` | IBM Plex Sans KR (SIL OFL 1.1, `fonts/OFL.txt`) |
+| `thumbnail.py` | 소현생정 디자인 시스템(새싹 팔레트) 대표 이미지(1080x1350) 생성. `--mark`로 1줄 형광펜 단어 지정(기본: 마지막 단어, `-`면 없음) |
+| `fonts/` | Pretendard Medium·Bold·ExtraBold (SIL OFL 1.1, `fonts/Pretendard-OFL.txt`) — 썸네일 사용 서체. IBM Plex Sans KR(`fonts/OFL.txt`)은 이전 양식용으로 보관 |
 | `thumbs/` | 블로그에 올릴 대표 이미지. uplika가 raw 주소로 내려받음 |
 | `thumbs/jobs/*.json` | 사진 넣은 썸네일 주문서. push 하면 GitHub Action(`.github/workflows/thumbnail.yml`)이 사진을 내려받아 `thumbs/<같은 이름>.jpg`를 만들어 커밋 |
 | `config.json` | 발행 설정. `publish_mode`: `private`(비공개 저장 후 보고) / `public`(바로 공개) |
