@@ -25,7 +25,7 @@ jobs:
             out="thumbs/$name.jpg"
             [ -e "$out" ] && [ "$out" -nt "$job" ] && continue
             python3 - "$job" "$out" <<'PY'
-          import json, subprocess, sys, urllib.request, tempfile
+          import json, subprocess, sys, tempfile
           job, out = sys.argv[1], sys.argv[2]
           j = json.load(open(job, encoding="utf-8"))
           args = ["python3", "thumbnail.py", "--out", out]
@@ -33,8 +33,9 @@ jobs:
               if j.get(k): args += [f"--{k}", j[k]]
           if j.get("photo_url"):
               tmp = tempfile.NamedTemporaryFile(suffix=".jpg", delete=False).name
-              req = urllib.request.Request(j["photo_url"], headers={"User-Agent": "sohyun-blog-kit"})
-              open(tmp, "wb").write(urllib.request.urlopen(req, timeout=60).read())
+              subprocess.run(["curl", "-fsSL", "--retry", "2", "-A",
+                  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36",
+                  "-o", tmp, j["photo_url"]], check=True)
               args += ["--photo", tmp]
           subprocess.run(args, check=True)
           PY
