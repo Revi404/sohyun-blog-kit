@@ -1,0 +1,47 @@
+name: thumbnail
+# thumbs/jobs/<이름>.json 을 push 하면 사진을 내려받아 thumbnail.py 로 thumbs/<이름>.jpg 를 만들어 커밋한다.
+# job 형식: {"photo_url": "...", "tag": "...", "right": "...", "kicker": "...", "line1": "...", "line2": "...", "note": "..."}
+on:
+  push:
+    branches: [main]
+    paths: ["thumbs/jobs/*.json"]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: pip install pillow
+      - name: Render pending jobs
+        run: |
+          set -e
+          for job in thumbs/jobs/*.json; do
+            [ -e "$job" ] || continue
+            name=$(basename "$job" .json)
+            out="thumbs/$name.jpg"
+            [ -e "$out" ] && [ "$out" -nt "$job" ] && continue
+            python3 - "$job" "$out" <<'PY'
+          import json, subprocess, sys, urllib.request, tempfile
+          job, out = sys.argv[1], sys.argv[2]
+          j = json.load(open(job, encoding="utf-8"))
+          args = ["python3", "thumbnail.py", "--out", out]
+          for k in ["tag", "right", "kicker", "line1", "line2", "note"]:
+              if j.get(k): args += [f"--{k}", j[k]]
+          if j.get("photo_url"):
+              tmp = tempfile.NamedTemporaryFile(suffix=".jpg", delete=False).name
+              req = urllib.request.Request(j["photo_url"], headers={"User-Agent": "sohyun-blog-kit"})
+              open(tmp, "wb").write(urllib.request.urlopen(req, timeout=60).read())
+              args += ["--photo", tmp]
+          subprocess.run(args, check=True)
+          PY
+          done
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add thumbs/*.jpg
+          git diff --cached --quiet || (git commit -m "Render thumbnails" && git push)
