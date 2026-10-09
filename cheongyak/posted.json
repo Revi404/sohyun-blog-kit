@@ -6,7 +6,10 @@
       "kind": "apt",
       "name": "화서역 호수공원 아너스빌",
       "post_type": "결과정리",
-      "covers": ["공고해설", "결과정리"],
+      "covers": [
+        "공고해설",
+        "결과정리"
+      ],
       "notice_date": "2026-09-11",
       "winner_date": "2026-10-01",
       "published_at": "2026-10-08",
@@ -19,13 +22,30 @@
       "kind": "apt",
       "name": "더샵 동인센트리체",
       "post_type": "공고해설",
-      "covers": ["공고해설"],
+      "covers": [
+        "공고해설"
+      ],
       "notice_date": "2026-10-02",
       "winner_date": "2026-10-20",
       "published_at": "2026-10-08",
       "uplika_post_id": "post_ae6d7e4d345e3fe3",
       "url": "https://blog.naver.com/teanotcar/224434735570",
       "visibility": "비공개 발행 후 공개 요청(반영 미확인)"
+    },
+    {
+      "house_manage_no": "2026000469",
+      "kind": "apt",
+      "name": "연제갤러리자이",
+      "post_type": "공고해설",
+      "covers": [
+        "공고해설"
+      ],
+      "notice_date": "2026-10-08",
+      "winner_date": "2026-10-27",
+      "published_at": "2026-10-09",
+      "uplika_post_id": "post_c24a579d9ed58022",
+      "url": "https://blog.naver.com/teanotcar/224436255081",
+      "visibility": "공개 요청"
     }
   ]
 }
