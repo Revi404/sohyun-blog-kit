@@ -10,6 +10,7 @@
 | `thumbs/jobs/*.json` | 사진 넣은 썸네일 주문서. push 하면 GitHub Action(`.github/workflows/thumbnail.yml`)이 사진을 내려받아 `thumbs/<같은 이름>.jpg`를 만들어 커밋 |
 | `config.json` | 발행 설정. `publish_mode`: `private`(비공개 저장 후 보고) / `public`(바로 공개) |
 | `log.md` | 작성한 초안 기록 (주제 중복 방지, 마지막 열 = 주제 묶음) |
+| `stickers/` | 블로그 본문용 소현 캐릭터 스티커 15종(투명 PNG, 원본의 절반 크기 106~140px). uplika가 raw 주소로 내려받음 (2026-10-10 사용자 승인 크기) |
 
 ## 사진 넣은 썸네일 (Canva AI + GitHub Action)
 
