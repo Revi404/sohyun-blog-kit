@@ -1,3 +1,4 @@
+"""링크 배너 (글 끝, {.link=제휴링크}). 사용: python3 maps/banner.py "<배지>" "<큰 문구>" "<CTA 문구 →>" <out.jpg>"""
 import sys
 from PIL import Image, ImageDraw, ImageFont
 K="/home/claude/sohyun-blog-kit/fonts/Pretendard-"; f=lambda w,s: ImageFont.truetype(K+w+".otf",s)

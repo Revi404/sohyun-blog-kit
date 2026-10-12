@@ -1,9 +1,17 @@
-"""OSM 바탕(z10 타일 스티치) 위에 소현 스타일 코스 경로를 그린다."""
-import math, sys
+"""OSM 바탕(fetch_tiles.py 결과) 위에 소현 스타일 코스 경로를 그린다.
+사용: python3 maps/route_map.py <base.png> <out.jpg> <stops.json>
+stops.json 예시 (maps/stops_fukuoka.json):
+{"z":10,"tx0":882,"ty0":409,"title":"후쿠오카 2박3일 코스 한눈에 보기",
+ "note":"버스투어 방문 순서는 상품마다 달라요","return_to_start":true,
+ "stops":[{"name":"후쿠오카(하카타)","lat":33.59,"lon":130.42,"sub":"1·3일차 시내","side":[1,-1]}, ...]}
+side = 라벨 위치 [x(-1 왼쪽/1 오른쪽), y(-1 위/1 아래)]. 렌더 후 반드시 Read로 열어 라벨 잘림·겹침 확인.
+"""
+import json, math, sys
 from PIL import Image, ImageDraw, ImageFont, ImageEnhance
 K = "/home/claude/sohyun-blog-kit/fonts/Pretendard-"
 f = lambda w, s: ImageFont.truetype(K + w + ".otf", s)
-Z, TX0, TY0 = 10, 882, 409
+CFG = json.load(open(sys.argv[3], encoding="utf-8"))
+Z, TX0, TY0 = CFG["z"], CFG["tx0"], CFG["ty0"]
 def px(lat, lon):
     n = 2 ** Z
     x = (lon + 180) / 360 * n
@@ -13,10 +21,7 @@ base = Image.open(sys.argv[1]).convert("RGB")
 # 부드러운 톤: 채도·대비 낮추고 종이색 살짝 덮기
 base = ImageEnhance.Color(base).enhance(0.55)
 base = Image.blend(base, Image.new("RGB", base.size, (244, 242, 233)), 0.28)
-stops = [("후쿠오카(하카타)", 33.590, 130.420, "1·3일차 시내"),
-         ("다자이후", 33.519, 130.535, "2일차 버스투어"),
-         ("유후인", 33.265, 131.355, "2일차 버스투어"),
-         ("벳푸", 33.284, 131.491, "2일차 버스투어")]
+stops = [(d["name"], d["lat"], d["lon"], d["sub"]) for d in CFG["stops"]]
 pts = [px(a, b) for _, a, b, _ in stops]
 # 크롭 영역
 xs = [p[0] for p in pts]; ys = [p[1] for p in pts]
@@ -31,7 +36,7 @@ d = ImageDraw.Draw(big)
 ACC, DEEP, CORAL, INK, WHITE = (30, 145, 80), (12, 82, 48), (224, 86, 59), (22, 21, 15), (255, 255, 255)
 P = [(x * S, y * S) for x, y in pts]
 # 경로(점선): 하카타→다자이후→유후인→벳푸→하카타(복귀)
-route = [0, 1, 2, 3, 0]
+route = list(range(len(stops))) + ([0] if CFG.get("return_to_start") else [])
 def dashed(a, b, col, w, dash=26, gap=16):
     (x1, y1), (x2, y2) = a, b
     L_ = math.hypot(x2 - x1, y2 - y1); ux, uy = (x2 - x1) / L_, (y2 - y1) / L_
@@ -50,7 +55,7 @@ for i in range(len(route) - 1):
         dashed(a, b, DEEP, 7 * S)
 # 마커
 nf, lf, sf = f("ExtraBold", 26 * S), f("Bold", 30 * S), f("Medium", 21 * S)
-offsets = {0: (1, -1), 1: (-1, 1), 2: (-1, 1), 3: (-1, -1)}
+offsets = {i: tuple(d.get("side", [1, -1])) for i, d in enumerate(CFG["stops"])}
 for i, ((x, y), (name, _, _, sub)) in enumerate(zip(P, stops)):
     r = 26 * S
     d.ellipse((x - r - 5 * S, y - r - 5 * S, x + r + 5 * S, y + r + 5 * S), fill=WHITE)
@@ -69,10 +74,10 @@ W = im.width
 out = Image.new("RGB", (W, im.height + 150), (244, 242, 233))
 out.paste(im, (0, 110))
 d2 = ImageDraw.Draw(out)
-d2.text((36, 30), "후쿠오카 2박3일 코스 한눈에 보기", font=f("ExtraBold", 40), fill=INK)
-d2.text((36, im.height + 122), "지도 © OpenStreetMap contributors · 버스투어 방문 순서는 상품마다 달라요 · 소현생정", font=f("Medium", 18), fill=(89, 87, 80))
+d2.text((36, 30), CFG["title"], font=f("ExtraBold", 40), fill=INK)
+d2.text((36, im.height + 122), "지도 © OpenStreetMap contributors · " + (CFG.get("note", "") + " · " if CFG.get("note") else "") + "소현생정", font=f("Medium", 18), fill=(89, 87, 80))
 lx = W - 36
-for label, col in [("복귀", CORAL), ("버스투어", DEEP)]:
+for label, col in ([("복귀", CORAL)] if CFG.get("return_to_start") else []) + [(CFG.get("route_label", "이동 경로"), DEEP)]:
     tw = d2.textlength(label, font=f("Medium", 20))
     d2.text((lx - tw, 44), label, font=f("Medium", 20), fill=INK); lx -= tw + 10
     d2.line([(lx - 40, 56), (lx, 56)], fill=col, width=6); lx -= 64
