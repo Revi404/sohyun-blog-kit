@@ -1,0 +1,359 @@
+{
+ "_설명": "소현생정 캐릭터 스티커 목록. 모든 소현 스킬은 파일명을 외우지 말고 이 목록의 emotions로 고른다. 새 스티커 등록 절차는 stickers/README.md.",
+ "emotion_groups": {
+  "기쁨": "기쁨·신남",
+  "추천": "추천·만족",
+  "하트": "좋아요·고마움",
+  "궁금": "궁금·고민",
+  "놀람": "놀람",
+  "아쉬움": "민망·울먹·아쉬움",
+  "주의": "불만·주의",
+  "휴식": "피곤·휴식",
+  "정보": "정보검색·일상"
+ },
+ "stickers": [
+  {
+   "id": "01_heart",
+   "kind": "full",
+   "desc": "잔잔한 미소 + 하트",
+   "emotions": [
+    "하트"
+   ],
+   "use": "마무리·고마움(추천 강도 보통)",
+   "blog": "stickers/01_heart.png",
+   "full": "stickers_full/01_heart.png",
+   "added": "2026-10-10"
+  },
+  {
+   "id": "02_peace",
+   "kind": "full",
+   "desc": "눈웃음 + 양손 브이",
+   "emotions": [
+    "기쁨"
+   ],
+   "use": "인사·득템·신나는 소식",
+   "blog": "stickers/02_peace.png",
+   "full": "stickers_full/02_peace.png",
+   "added": "2026-10-10"
+  },
+  {
+   "id": "03_question",
+   "kind": "full",
+   "desc": "턱에 손 대고 갸웃 + 물음표",
+   "emotions": [
+    "궁금"
+   ],
+   "use": "Q&A·헷갈리는 부분·가벼운 아쉬움",
+   "blog": "stickers/03_question.png",
+   "full": "stickers_full/03_question.png",
+   "added": "2026-10-10"
+  },
+  {
+   "id": "04_wink_thumb",
+   "kind": "full",
+   "desc": "윙크 + 엄지척 + 반짝이",
+   "emotions": [
+    "추천"
+   ],
+   "use": "꿀팁·추천 포인트·추천형 마무리",
+   "blog": "stickers/04_wink_thumb.png",
+   "full": "stickers_full/04_wink_thumb.png",
+   "added": "2026-10-10"
+  },
+  {
+   "id": "05_happy_cheeks",
+   "kind": "full",
+   "desc": "양손으로 볼 감싸고 활짝",
+   "emotions": [
+    "기쁨",
+    "추천"
+   ],
+   "use": "만족·득템·좋은 결과",
+   "blog": "stickers/05_happy_cheeks.png",
+   "full": "stickers_full/05_happy_cheeks.png",
+   "added": "2026-10-10"
+  },
+  {
+   "id": "06_arms_crossed",
+   "kind": "full",
+   "desc": "팔짱 + 시큰둥",
+   "emotions": [
+    "주의"
+   ],
+   "use": "주의사항·하지 말 것·따져볼 점",
+   "blog": "stickers/06_arms_crossed.png",
+   "full": "stickers_full/06_arms_crossed.png",
+   "added": "2026-10-10"
+  },
+  {
+   "id": "07_surprised",
+   "kind": "full",
+   "desc": "두 손으로 입 가리고 깜짝 + 땀방울",
+   "emotions": [
+    "놀람"
+   ],
+   "use": "의외의 사실·가격·수치·경쟁률",
+   "blog": "stickers/07_surprised.png",
+   "full": "stickers_full/07_surprised.png",
+   "added": "2026-10-10"
+  },
+  {
+   "id": "08_sleepy_desk",
+   "kind": "full",
+   "desc": "책상에 엎드려 졸음",
+   "emotions": [
+    "휴식"
+   ],
+   "use": "공부·밤·지친 일상",
+   "blog": "stickers/08_sleepy_desk.png",
+   "full": "stickers_full/08_sleepy_desk.png",
+   "added": "2026-10-10"
+  },
+  {
+   "id": "09_phone",
+   "kind": "full",
+   "desc": "휴대폰 보는 중",
+   "emotions": [
+    "정보"
+   ],
+   "use": "신청 방법·앱/사이트 조회·검색",
+   "blog": "stickers/09_phone.png",
+   "full": "stickers_full/09_phone.png",
+   "added": "2026-10-10"
+  },
+  {
+   "id": "10_tea",
+   "kind": "full",
+   "desc": "찻잔 들고 흐뭇",
+   "emotions": [
+    "휴식",
+    "정보"
+   ],
+   "use": "정리·여유·계절",
+   "blog": "stickers/10_tea.png",
+   "full": "stickers_full/10_tea.png",
+   "added": "2026-10-10"
+  },
+  {
+   "id": "11_sunglasses",
+   "kind": "full",
+   "desc": "선글라스 + 자신만만",
+   "emotions": [
+    "추천"
+   ],
+   "use": "자신 있는 꿀팁·강한 추천",
+   "blog": "stickers/11_sunglasses.png",
+   "full": "stickers_full/11_sunglasses.png",
+   "added": "2026-10-10"
+  },
+  {
+   "id": "12_shy_teary",
+   "kind": "full",
+   "desc": "볼 빨개지고 울먹 + 땀방울",
+   "emotions": [
+    "아쉬움"
+   ],
+   "use": "아쉬운 점·실수담",
+   "blog": "stickers/12_shy_teary.png",
+   "full": "stickers_full/12_shy_teary.png",
+   "added": "2026-10-10"
+  },
+  {
+   "id": "13_cheer",
+   "kind": "full",
+   "desc": "두 팔 들고 환호",
+   "emotions": [
+    "기쁨"
+   ],
+   "use": "응원·신청 독려·당첨 기원",
+   "blog": "stickers/13_cheer.png",
+   "full": "stickers_full/13_cheer.png",
+   "added": "2026-10-10"
+  },
+  {
+   "id": "14_angry",
+   "kind": "full",
+   "desc": "화남 + 분노 표시",
+   "emotions": [
+    "주의"
+   ],
+   "use": "강한 경고·불만",
+   "blog": "stickers/14_angry.png",
+   "full": "stickers_full/14_angry.png",
+   "added": "2026-10-10"
+  },
+  {
+   "id": "15_sleeping",
+   "kind": "full",
+   "desc": "베개에 기대 잠 + 달",
+   "emotions": [
+    "휴식"
+   ],
+   "use": "밤·겨울·휴식",
+   "blog": "stickers/15_sleeping.png",
+   "full": "stickers_full/15_sleeping.png",
+   "added": "2026-10-10"
+  },
+  {
+   "id": "mini_01_smile",
+   "kind": "mini",
+   "desc": "잔잔한 미소",
+   "emotions": [
+    "하트"
+   ],
+   "use": "짧은 강조·표 아래 한마디 보조",
+   "blog": null,
+   "full": "stickers_full/mini_01_smile.png",
+   "added": "2026-10-10"
+  },
+  {
+   "id": "mini_02_happy",
+   "kind": "mini",
+   "desc": "눈 감고 웃음",
+   "emotions": [
+    "기쁨"
+   ],
+   "use": "짧은 강조·표 아래 한마디 보조",
+   "blog": null,
+   "full": "stickers_full/mini_02_happy.png",
+   "added": "2026-10-10"
+  },
+  {
+   "id": "mini_03_pout",
+   "kind": "mini",
+   "desc": "입 삐죽",
+   "emotions": [
+    "아쉬움",
+    "주의"
+   ],
+   "use": "짧은 강조·표 아래 한마디 보조",
+   "blog": null,
+   "full": "stickers_full/mini_03_pout.png",
+   "added": "2026-10-10"
+  },
+  {
+   "id": "mini_04_oh",
+   "kind": "mini",
+   "desc": "입 동그랗게 오!",
+   "emotions": [
+    "놀람"
+   ],
+   "use": "짧은 강조·표 아래 한마디 보조",
+   "blog": null,
+   "full": "stickers_full/mini_04_oh.png",
+   "added": "2026-10-10"
+  },
+  {
+   "id": "mini_05_joy",
+   "kind": "mini",
+   "desc": "활짝 웃음",
+   "emotions": [
+    "기쁨",
+    "추천"
+   ],
+   "use": "짧은 강조·표 아래 한마디 보조",
+   "blog": null,
+   "full": "stickers_full/mini_05_joy.png",
+   "added": "2026-10-10"
+  },
+  {
+   "id": "mini_06_shy",
+   "kind": "mini",
+   "desc": "머쓱",
+   "emotions": [
+    "아쉬움"
+   ],
+   "use": "짧은 강조·표 아래 한마디 보조",
+   "blog": null,
+   "full": "stickers_full/mini_06_shy.png",
+   "added": "2026-10-10"
+  },
+  {
+   "id": "mini_07_grin",
+   "kind": "mini",
+   "desc": "장난스런 웃음",
+   "emotions": [
+    "추천",
+    "기쁨"
+   ],
+   "use": "짧은 강조·표 아래 한마디 보조",
+   "blog": null,
+   "full": "stickers_full/mini_07_grin.png",
+   "added": "2026-10-10"
+  },
+  {
+   "id": "icon_drops",
+   "kind": "icon",
+   "desc": "물방울(땀)",
+   "emotions": [
+    "아쉬움",
+    "놀람"
+   ],
+   "use": "장식·강조 보조(단독 리액션으로 쓰지 않음)",
+   "blog": null,
+   "full": "stickers_full/icon_drops.png",
+   "added": "2026-10-10"
+  },
+  {
+   "id": "icon_heart",
+   "kind": "icon",
+   "desc": "분홍 하트",
+   "emotions": [
+    "하트"
+   ],
+   "use": "장식·강조 보조(단독 리액션으로 쓰지 않음)",
+   "blog": null,
+   "full": "stickers_full/icon_heart.png",
+   "added": "2026-10-10"
+  },
+  {
+   "id": "icon_heart2",
+   "kind": "icon",
+   "desc": "하트 테두리",
+   "emotions": [
+    "하트"
+   ],
+   "use": "장식·강조 보조(단독 리액션으로 쓰지 않음)",
+   "blog": null,
+   "full": "stickers_full/icon_heart2.png",
+   "added": "2026-10-10"
+  },
+  {
+   "id": "icon_question",
+   "kind": "icon",
+   "desc": "보라 물음표",
+   "emotions": [
+    "궁금"
+   ],
+   "use": "장식·강조 보조(단독 리액션으로 쓰지 않음)",
+   "blog": null,
+   "full": "stickers_full/icon_question.png",
+   "added": "2026-10-10"
+  },
+  {
+   "id": "icon_sparkle",
+   "kind": "icon",
+   "desc": "노란 반짝이",
+   "emotions": [
+    "추천",
+    "기쁨"
+   ],
+   "use": "장식·강조 보조(단독 리액션으로 쓰지 않음)",
+   "blog": null,
+   "full": "stickers_full/icon_sparkle.png",
+   "added": "2026-10-10"
+  },
+  {
+   "id": "icon_star",
+   "kind": "icon",
+   "desc": "노란 별",
+   "emotions": [
+    "추천"
+   ],
+   "use": "장식·강조 보조(단독 리액션으로 쓰지 않음)",
+   "blog": null,
+   "full": "stickers_full/icon_star.png",
+   "added": "2026-10-10"
+  }
+ ]
+}
