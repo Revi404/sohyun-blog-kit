@@ -4,7 +4,8 @@
   python3 cardreel.py render <slides.json> <출력폴더>
 
 출력: <출력폴더>/png/01.png… (장표), <name>.mp4 (장당 dur초 + 0.3초 슬라이드 전환, 무음),
-      <name>_grid.png (프로필 그리드 3:4 미리보기 = 첫 장), report.json (넘침·3:4 밖 점검)
+      <name>_grid.png (프로필 그리드 3:4 미리보기 = 첫 장), report.json (넘침·3:4 밖 점검),
+      feed/<name>_NN.png (피드 캐러셀용 3:4 1080x1440 장표, 릴스 장표의 3:4 영역을 그대로 자른 것)
 
 slides.json = {
   "name": "20261017_난방시작전체크", "theme": "sohyun" | "richlab",
@@ -121,7 +122,7 @@ def sticker_html(spec, used, base):
     else:
         l, r, tp, bt = POS[s.get("pos", "br")]
         st = ";".join(x for x in [f"left:{l}px" if l is not None else "", f"right:{r}px" if r is not None else "",
-                                  f"top:{tp}px" if tp is not None else "", f"bottom:{H - bt + 20}px" if bt is not None else ""] if x)
+                                  f"top:{tp}px" if tp is not None else "", f"bottom:{H - bt + 48}px" if bt is not None else ""] if x)
     return f'<img class="sticker" src="{uri(path)}" style="width:{w}px;{st}"/>'
 
 def box(s):
@@ -216,6 +217,9 @@ def render(cfg_path, out):
     mp4 = out / f"{cfg['name']}.mp4"
     total = encode(pngs, durs, mp4)
     grid_preview(pngs[0], out / f"{cfg['name']}_grid.png")
+    (out / "feed").mkdir(exist_ok=True)
+    for i, pp in enumerate(pngs, 1):
+        grid_preview(pp, out / "feed" / f"{cfg['name']}_{i:02d}.png")
     (out / "report.json").write_text(json.dumps({"slides": rep, "stickers": sorted(used), "seconds": round(total, 1)}, ensure_ascii=False, indent=1), encoding="utf-8")
     print(f"{mp4}  {n}장  {total:.1f}초  스티커 {sorted(used)}")
 

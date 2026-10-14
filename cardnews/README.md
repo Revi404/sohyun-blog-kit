@@ -3,7 +3,7 @@
 | 파일 | 역할 |
 |---|---|
 | `common.py` | 테마(sohyun/richlab), 글꼴, 스티커 목록(`../stickers/catalog.json`) 고르기, 넘침 자동 축소, 3:4 점검, 영상 인코딩 |
-| `cardreel.py` | 카드뉴스 릴스: `python3 cardnews/cardreel.py render slides.json out/` |
+| `cardreel.py` | 카드뉴스: `python3 cardnews/cardreel.py render slides.json out/` → 릴스 영상 `<name>.mp4`(9:16) + 피드 캐러셀 장표 `feed/<name>_NN.png`(3:4, 1080x1440) |
 | `tier.py` | 공통 티어표: `python3 cardnews/tier.py render tier.json out/` |
 
 화면 규칙: 9:16(1080x1920) 캔버스, 내용은 가운데 3:4(1080x1440, y=240~1680) 안. 프로필 그리드 미리보기에서 잘리지 않게 하기 위함.
