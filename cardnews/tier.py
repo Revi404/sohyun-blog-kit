@@ -17,7 +17,7 @@ tier.json = {
   "tiers": [ {"key":"S", "label":"검증 끝\n바로 담기", "range":"리뷰 3,000+", "color":"#E0563B", "fg":"#fff",
               "items":[...], "empty":"이번엔 해당 없음"} , ...],
   "criteria": "<b>티어 기준</b> ...",       # 아래 진한 상자 (줄바꿈 \n). 기준·출처·조회일은 반드시 넣는다
-  "seconds": 8
+  "seconds": 25
 }
 items:
   card   {"img": 경로, "name", "sub", "price", "meta"}           (사진 카드: 상품·장소·제품)
@@ -191,7 +191,7 @@ def render(cfg_path, out):
                       f'<img src="{uri(feed)}" style="position:absolute;left:0;top:{SAFE_TOP}px;width:1080px;height:1440px"/></body></html>', encoding="utf-8")
         pg.set_viewport_size({"width": 1080, "height": 1920}); pg.goto(uri(rh)); pg.wait_for_timeout(200)
         reel = out / f"{cfg['name']}_reel.png"; pg.screenshot(path=str(reel)); b.close()
-    secs = cfg.get("seconds", 8)
+    secs = cfg.get("seconds", 25)
     encode([reel], [secs], out / f"{cfg['name']}.mp4")
     rep = {"zoom": fit["zoom"], "fits": fit["ok"], "stickers": sorted(used), "seconds": secs}
     (out / "report.json").write_text(json.dumps(rep, ensure_ascii=False, indent=1), encoding="utf-8")
