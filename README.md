@@ -21,6 +21,8 @@
 3. 그 URL 을 `photo_url` 로 `thumbs/jobs/<YYYYMMDD>_<슬러그>.json` 을 push → Action 이 `thumbs/<같은 이름>.jpg` 를 만들어 커밋.
 4. raw 주소로 uplika `media_from_url`(aiGenerated: true).
 
+Canva `export-design` 주소는 몇 시간~하루 뒤 만료(403)되므로 받자마자 job 을 push 한다. Action 은 jpg 가 없거나 job 이 jpg 보다 나중에 커밋된 것만 렌더하고, 한 건이 실패해도 나머지는 렌더·커밋한다. 실패한 job 은 export 를 다시 받아 `photo_url` 을 고쳐 push 하면 다시 렌더된다.
+
 작업 환경에서는 Unsplash·uplika CDN·Canva 다운로드 주소가 막혀 있어 사진을 직접 받을 수 없으므로 GitHub Action 이 대신 받는다. Unsplash 다운로드 주소는 GitHub 서버에서도 401 이 나므로, Unsplash 사진을 쓸 때는 uplika `media_from_url` 응답의 `publicUrl`(cdn.uplika.com, 약 2일 유지)을 쓴다.
 
 ```json

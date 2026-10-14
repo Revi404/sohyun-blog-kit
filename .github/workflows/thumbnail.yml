@@ -13,18 +13,28 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }   # 커밋 시각 비교용 전체 이력
       - uses: actions/setup-python@v5
         with: { python-version: "3.12" }
       - run: pip install pillow
       - name: Render pending jobs
+        # checkout 은 모든 파일 수정시각을 같게 만들어 -nt 비교가 안 된다. 그래서 커밋 시각으로
+        # "jpg 가 없거나 job 이 jpg 보다 나중에 커밋된 것"만 렌더한다. 이미 만든 썸네일은 다시
+        # 받지 않으므로, 몇 시간 뒤 만료되는 Canva 다운로드 주소 때문에 실패하지 않는다.
+        # 한 건이 실패해도 나머지는 렌더·커밋하고, 마지막에 실패로 표시한다.
         run: |
-          set -e
+          failed=""
           for job in thumbs/jobs/*.json; do
             [ -e "$job" ] || continue
             name=$(basename "$job" .json)
             out="thumbs/$name.jpg"
-            [ -e "$out" ] && [ "$out" -nt "$job" ] && continue
-            python3 - "$job" "$out" <<'PY'
+            if [ -e "$out" ]; then
+              job_t=$(git log -1 --format=%ct -- "$job")
+              out_t=$(git log -1 --format=%ct -- "$out")
+              [ -n "$out_t" ] && [ "${job_t:-0}" -le "$out_t" ] && continue
+            fi
+            echo "render $name"
+            python3 - "$job" "$out" <<'PY' || { failed="$failed $name"; echo "::error file=$job::$name 렌더 실패 (photo_url 만료 시 Canva export 를 다시 받아 job 을 고쳐 push)"; }
           import json, subprocess, sys, tempfile
           job, out = sys.argv[1], sys.argv[2]
           j = json.load(open(job, encoding="utf-8"))
@@ -40,9 +50,15 @@ jobs:
           subprocess.run(args, check=True)
           PY
           done
+          echo "failed=$failed" >> "$GITHUB_ENV"
       - name: Commit
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add thumbs/*.jpg
-          git diff --cached --quiet || (git commit -m "Render thumbnails" && git push)
+          git diff --cached --quiet || (git commit -m "Render thumbnails" && git pull --rebase && git push)
+      - name: Report failures
+        if: env.failed != ''
+        run: |
+          echo "렌더 실패:$failed"
+          exit 1
