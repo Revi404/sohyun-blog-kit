@@ -22,6 +22,9 @@ type 별 필드 (문자열 안에서 <hl>형광펜</hl> <c>코랄</c> <b>강조<
   steps   kicker, title, steps[[왼쪽칸, 제목, 설명]], box, note
   summary kicker, title, items[[라벨, 내용]], note
   outro   kicker, title, cta, cta_sub, note
+  scene   photo, kicker, title, sub, badge(큰 숫자 한 줄), text("bottom"|"top"), focus(사진 기준점 "50% 40%"), credit
+          (숏폼 변용용: 사진이 장표를 꽉 채우고 글은 사진 위에 얹는다)
+  gallery kicker, title, items[[사진, 번호·라벨] x2~4], sub  (마지막 질문 장: 앞 장면 사진을 작게 모아 번호로 묻기)
 공통: sticker = "07_surprised" | {"emotion": "놀람"} | {"id":..,"pos":"br"|"bl"|"tr","w":300} | {"file": 경로}
       (스티커는 stickers/catalog.json에서 고른다. pos: br 오른쪽 아래(기본) / bl / tr / mid 오른쪽 가운데)
 사진 경로는 slides.json 기준 상대경로.
@@ -97,6 +100,26 @@ tr.me td{background:var(--soft)}
 .cta .a span{color:var(--hl)}
 .cta .b{font-size:33px;opacity:.85;margin-top:14px;line-height:1.45}
 .note{font-size:29px;color:var(--soft_ink);margin-top:18px;line-height:1.5}
+.scene{position:relative;flex:1;min-height:0;border-radius:44px;overflow:hidden;background:#222}
+.scene>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.scene .shade{position:absolute;left:0;right:0;height:62%}
+.scene.bottom .shade{bottom:0;background:linear-gradient(transparent,rgba(0,0,0,.72))}
+.scene.top .shade{top:0;background:linear-gradient(rgba(0,0,0,.72),transparent)}
+.scene .txt{position:absolute;left:54px;right:54px;color:#fff}
+.scene.bottom .txt{bottom:60px}
+.scene.top .txt{top:60px}
+.scene .k{font-weight:700;font-size:40px;opacity:.92;margin-bottom:16px;letter-spacing:-1px}
+.scene .t{font-weight:800;font-size:84px;line-height:1.14;letter-spacing:-3px;text-shadow:0 2px 18px rgba(0,0,0,.35)}
+.scene .t hl{color:#fff;background:linear-gradient(transparent 60%,var(--coral) 60%)}
+.scene .s{font-family:J;font-size:48px;margin-top:22px;line-height:1.35}
+.scene .badge{display:inline-block;background:var(--hl);color:var(--hl_ink);font-weight:800;font-size:64px;border-radius:22px;padding:8px 26px;margin-bottom:22px;letter-spacing:-1.5px}
+.scene .cr{position:absolute;right:26px;top:22px;font-size:22px;color:#fff;opacity:.75}
+.gal{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;flex:1;min-height:0}
+.gal.n3 div:first-child{grid-column:1 / span 2}
+.gal div{position:relative;border-radius:32px;overflow:hidden;min-height:0}
+.gal img{width:100%;height:100%;object-fit:cover;display:block}
+.gal span{position:absolute;left:22px;bottom:20px;background:#fff;color:var(--ink);font-weight:800;font-size:40px;border-radius:20px;padding:8px 22px}
+.gsub{font-family:J;font-size:46px;color:var(--deep);margin-top:26px}
 """
 
 def frame(t, body, page, total, label):
@@ -198,7 +221,27 @@ def r_outro(s, base):
     if s.get("note"): b += f'<div class="note">{e(s["note"])}</div>'
     return b
 
-R = dict(hook=r_hook, tip=r_tip, table=r_table, bars=r_bars, photos=r_photos, steps=r_steps, summary=r_summary, outro=r_outro)
+def r_scene(s, base):
+    pos = s.get("text", "bottom")
+    t = ""
+    if s.get("kicker"): t += f'<div class="k">{e(s["kicker"])}</div>'
+    if s.get("badge"): t += f'<div class="badge">{e(s["badge"])}</div>'
+    t += f'<div class="t">{e(s["title"])}</div>'
+    if s.get("sub"): t += f'<div class="s">{e(s["sub"])}</div>'
+    cr = f'<div class="cr">{e(s["credit"])}</div>' if s.get("credit") else ""
+    return (f'<div class="scene {pos}"><img src="{uri(base / s["photo"])}" style="object-position:{s.get("focus", "50% 50%")}"/>'
+            f'<div class="shade"></div>{cr}<div class="txt">{t}</div></div>')
+
+def r_gallery(s, base):
+    items = s["items"]
+    b = head(s, "m", 30) + f'<div class="gal n{len(items)}">'
+    for p, lab in items:
+        b += f'<div><img src="{uri(base / p)}"/><span>{e(lab)}</span></div>'
+    b += "</div>"
+    if s.get("sub"): b += f'<div class="gsub">{e(s["sub"])}</div>'
+    return b
+
+R = dict(scene=r_scene, gallery=r_gallery, hook=r_hook, tip=r_tip, table=r_table, bars=r_bars, photos=r_photos, steps=r_steps, summary=r_summary, outro=r_outro)
 
 def render(cfg_path, out):
     cfg = json.loads(Path(cfg_path).read_text(encoding="utf-8"))
