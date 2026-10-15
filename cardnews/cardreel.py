@@ -25,7 +25,7 @@ type 별 필드 (문자열 안에서 <hl>형광펜</hl> <c>코랄</c> <b>강조<
   scene   photo, kicker, title, sub, badge(큰 숫자 한 줄), text("bottom"|"top"), focus(사진 기준점 "50% 40%"), credit
           (숏폼 변용용: 사진이 장표를 꽉 채우고 글은 사진 위에 얹는다)
           style: "card"(기본, 종이 여백 안 둥근 사진) | "full"(화면 끝까지 사진, 하단 큰 글씨)
-                 | "magazine"(화면 끝까지 사진, 상단 큰 타이포 + badge를 거대 숫자로) | "cinema"(검정 배경, 가운데 사진 띠 + 자막)
+                 | "magazine"(화면 끝까지 사진, 상단 큰 타이포 + badge를 거대 숫자로) | "cinema"(화면 끝까지 사진 + 위·아래 검정 레터박스 + 비네팅, 왼쪽 정렬 큰 글씨)
           장마다 안 주면 slides.json 최상위 "scene_style"을 쓴다
   file    kicker, title, file(파일 이름), sub, small  (마지막 장: 재치 있는 한마디 + 파일 카드 + 블로그 유도)
   gallery kicker, title, items[[사진, 번호·라벨] x2~4], sub  (마지막 질문 장: 앞 장면 사진을 작게 모아 번호로 묻기)
@@ -142,14 +142,18 @@ tr.me td{background:var(--soft)}
 .ov.magazine .t{font-size:124px;line-height:1.02;margin-top:28px;letter-spacing:-6px}
 .ov.magazine .big{margin-top:auto;font-weight:800;font-size:230px;line-height:.9;letter-spacing:-10px;color:transparent;-webkit-text-stroke:5px #fff}
 .ov.magazine .s{margin-top:36px;font-family:P;font-weight:700;font-size:40px;opacity:.95}
-.cine{position:absolute;inset:0;background:#0d0d0d}
-.cine .band{position:absolute;left:0;right:0;top:430px;height:820px;overflow:hidden}
-.cine .band img{width:100%;height:100%;object-fit:cover}
-.ov.cinema{text-align:center;align-items:center}
-.ov.cinema .k{margin-top:4px;font-size:34px;letter-spacing:6px;opacity:.75}
-.ov.cinema .badge{margin-top:auto;color:var(--hl);font-weight:800;font-size:56px;letter-spacing:-1px}
-.ov.cinema .t{font-size:66px;line-height:1.25;letter-spacing:-2px;margin-top:10px}
-.ov.cinema .s{font-size:40px;opacity:.8;margin-top:14px;margin-bottom:20px}
+.cine{position:absolute;inset:0;overflow:hidden;background:#111}
+.cine img{width:100%;height:100%;object-fit:cover}
+.cine .vig{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 45%,transparent 35%,rgba(0,0,0,.55) 100%)}
+.cine .bar{position:absolute;left:0;right:0;height:170px;background:#000}
+.cine .bar.t{top:240px}.cine .bar.b{top:1510px}
+.cine .g2{position:absolute;left:0;right:0;top:960px;height:560px;background:linear-gradient(transparent,rgba(0,0,0,.7))}
+.ov.cinema{justify-content:flex-end;padding-bottom:150px}
+.ov.cinema .k{display:flex;align-items:center;gap:18px;font-size:38px;letter-spacing:2px}
+.ov.cinema .k:before{content:"";width:46px;height:4px;background:var(--hl)}
+.ov.cinema .badge{align-self:flex-start;background:var(--hl);color:var(--hl_ink);font-weight:800;font-size:60px;border-radius:20px;padding:6px 24px;margin-top:20px}
+.ov.cinema .t{font-size:92px;line-height:1.12;margin-top:20px}
+.ov.cinema .s{margin-top:22px}
 .filecard{margin-top:56px;background:#fff;border-radius:36px;padding:44px 44px;display:flex;gap:34px;align-items:center;box-shadow:0 18px 50px rgba(20,60,30,.12)}
 .ficon{flex:none;width:150px;height:186px;border-radius:18px;background:var(--accent);position:relative;overflow:hidden}
 .ficon:before{content:"";position:absolute;right:0;top:0;width:52px;height:52px;background:var(--soft);border-bottom-left-radius:16px}
@@ -276,13 +280,12 @@ def scene_full(s, base, style):
     """화면 끝까지 사진(full·magazine) 또는 검정 시네마(cinema). (본문 HTML, 어두운 테마 여부)"""
     img = f'<img src="{uri(base / s["photo"])}" style="object-position:{s.get("focus", "50% 50%")}"/>'
     if style == "cinema":
-        bg = f'<div class="cine"><div class="band">{img}</div></div>'
-        t = f'<div class="k">{e(s.get("kicker", ""))}</div>'
-        t += f'<div class="badge">{e(s.get("badge", ""))}</div>' if s.get("badge") else '<div style="margin-top:auto"></div>'
+        bg = f'<div class="cine">{img}<div class="vig"></div><div class="g2"></div><div class="bar t"></div><div class="bar b"></div></div>'
+        t = f'<div class="k">{e(s.get("kicker", ""))}</div>' if s.get("kicker") else ""
+        if s.get("badge"): t += f'<div class="badge">{e(s["badge"])}</div>'
         t += f'<div class="t">{e(s["title"])}</div>'
         if s.get("sub"): t += f'<div class="s">{e(s["sub"])}</div>'
-        # 사진 띠(430~1250) 위·아래에 글이 가도록: 위 kicker, 아래 자막
-        return bg + f'<div class="main safe-check"><div class="ov cinema" style="justify-content:space-between">{t}</div></div>'
+        return bg + f'<div class="main safe-check"><div class="ov cinema">{t}</div></div>'
     bg = f'<div class="bleed">{img}<div class="g1"></div><div class="g2"></div></div>'
     if style == "magazine":
         t = f'<div class="k">{e(s.get("kicker", "")) or "&nbsp;"}</div><div class="t">{e(s["title"])}</div>'
