@@ -24,6 +24,10 @@ type 별 필드 (문자열 안에서 <hl>형광펜</hl> <c>코랄</c> <b>강조<
   outro   kicker, title, cta, cta_sub, note
   scene   photo, kicker, title, sub, badge(큰 숫자 한 줄), text("bottom"|"top"), focus(사진 기준점 "50% 40%"), credit
           (숏폼 변용용: 사진이 장표를 꽉 채우고 글은 사진 위에 얹는다)
+          style: "card"(기본, 종이 여백 안 둥근 사진) | "full"(화면 끝까지 사진, 하단 큰 글씨)
+                 | "magazine"(화면 끝까지 사진, 상단 큰 타이포 + badge를 거대 숫자로) | "cinema"(검정 배경, 가운데 사진 띠 + 자막)
+          장마다 안 주면 slides.json 최상위 "scene_style"을 쓴다
+  file    kicker, title, file(파일 이름), sub, small  (마지막 장: 재치 있는 한마디 + 파일 카드 + 블로그 유도)
   gallery kicker, title, items[[사진, 번호·라벨] x2~4], sub  (마지막 질문 장: 앞 장면 사진을 작게 모아 번호로 묻기)
 공통: sticker = "07_surprised" | {"emotion": "놀람"} | {"id":..,"pos":"br"|"bl"|"tr","w":300} | {"file": 경로}
       (스티커는 stickers/catalog.json에서 고른다. pos: br 오른쪽 아래(기본) / bl / tr / mid 오른쪽 가운데)
@@ -120,10 +124,46 @@ tr.me td{background:var(--soft)}
 .gal img{width:100%;height:100%;object-fit:cover;display:block}
 .gal span{position:absolute;left:22px;bottom:20px;background:#fff;color:var(--ink);font-weight:800;font-size:40px;border-radius:20px;padding:8px 22px}
 .gsub{font-family:J;font-size:46px;color:var(--deep);margin-top:26px}
+.bleed{position:absolute;inset:0;overflow:hidden;background:#111}
+.bleed img{width:100%;height:100%;object-fit:cover}
+.bleed .g1{position:absolute;left:0;right:0;top:0;height:560px;background:linear-gradient(rgba(0,0,0,.55),transparent)}
+.bleed .g2{position:absolute;left:0;right:0;bottom:0;height:1000px;background:linear-gradient(transparent,rgba(0,0,0,.78))}
+.ov{color:#fff;display:flex;flex-direction:column;height:100%}
+.ov .k{font-weight:700;font-size:42px;opacity:.95;letter-spacing:-1px}
+.ov .t{font-weight:800;letter-spacing:-4px;text-shadow:0 3px 24px rgba(0,0,0,.4)}
+.ov .t hl{color:#fff;background:linear-gradient(transparent 62%,var(--coral) 62%);padding:0 4px}
+.ov .s{font-family:J;font-size:50px;line-height:1.35}
+.ov.full{justify-content:flex-end;padding-bottom:30px}
+.ov.full .t{font-size:104px;line-height:1.1;margin-top:18px}
+.ov.full .s{margin-top:26px}
+.ov.full .badge{align-self:flex-start;background:var(--hl);color:var(--hl_ink);font-weight:800;font-size:66px;border-radius:22px;padding:8px 28px;margin-top:22px;letter-spacing:-1.5px}
+.ov.magazine .k{display:flex;align-items:center;gap:22px;font-size:36px;letter-spacing:4px}
+.ov.magazine .k:after{content:"";flex:1;height:3px;background:#fff;opacity:.8}
+.ov.magazine .t{font-size:124px;line-height:1.02;margin-top:28px;letter-spacing:-6px}
+.ov.magazine .big{margin-top:auto;font-weight:800;font-size:230px;line-height:.9;letter-spacing:-10px;color:transparent;-webkit-text-stroke:5px #fff}
+.ov.magazine .s{margin-top:36px;font-family:P;font-weight:700;font-size:40px;opacity:.95}
+.cine{position:absolute;inset:0;background:#0d0d0d}
+.cine .band{position:absolute;left:0;right:0;top:430px;height:820px;overflow:hidden}
+.cine .band img{width:100%;height:100%;object-fit:cover}
+.ov.cinema{text-align:center;align-items:center}
+.ov.cinema .k{margin-top:4px;font-size:34px;letter-spacing:6px;opacity:.75}
+.ov.cinema .badge{margin-top:auto;color:var(--hl);font-weight:800;font-size:56px;letter-spacing:-1px}
+.ov.cinema .t{font-size:66px;line-height:1.25;letter-spacing:-2px;margin-top:10px}
+.ov.cinema .s{font-size:40px;opacity:.8;margin-top:14px;margin-bottom:20px}
+.filecard{margin-top:56px;background:#fff;border-radius:36px;padding:44px 44px;display:flex;gap:34px;align-items:center;box-shadow:0 18px 50px rgba(20,60,30,.12)}
+.ficon{flex:none;width:150px;height:186px;border-radius:18px;background:var(--accent);position:relative;overflow:hidden}
+.ficon:before{content:"";position:absolute;right:0;top:0;width:52px;height:52px;background:var(--soft);border-bottom-left-radius:16px}
+.ficon i{position:absolute;left:24px;right:24px;height:12px;background:rgba(255,255,255,.85);border-radius:6px}
+.fname{font-weight:800;font-size:46px;line-height:1.3;letter-spacing:-1.5px;word-break:break-all}
+.fname small{display:block;font-weight:600;font-size:28px;color:var(--soft_ink);margin-top:10px;letter-spacing:0}
+.fsub{font-weight:800;font-size:74px;line-height:1.2;letter-spacing:-2.5px;margin-top:64px}
+.fsmall{font-family:J;font-size:50px;color:var(--coral);margin-top:20px}
 """
 
-def frame(t, body, page, total, label):
-    return f"""<!doctype html><html><head><meta charset="utf-8"><style>{font_css()}{CSS}</style></head>
+DARK = ".blob{display:none}.brand{color:#fff}.brand small{color:rgba(255,255,255,.82)}"
+
+def frame(t, body, page, total, label, dark=False):
+    return f"""<!doctype html><html><head><meta charset="utf-8"><style>{font_css()}{CSS}{DARK if dark else ""}</style></head>
 <body style="{css_vars(t)}"><div class="blob"></div>
 {body}
 <div class="top safe-check"><div class="brand"><img src="{uri(BRAND / 'mark.png')}"/>{e(t['brand'])}<small>{e(t['sub'])}</small></div><div class="pill">{e(label)}<span>{page}/{total}</span></div></div>
@@ -232,6 +272,38 @@ def r_scene(s, base):
     return (f'<div class="scene {pos}"><img src="{uri(base / s["photo"])}" style="object-position:{s.get("focus", "50% 50%")}"/>'
             f'<div class="shade"></div>{cr}<div class="txt">{t}</div></div>')
 
+def scene_full(s, base, style):
+    """화면 끝까지 사진(full·magazine) 또는 검정 시네마(cinema). (본문 HTML, 어두운 테마 여부)"""
+    img = f'<img src="{uri(base / s["photo"])}" style="object-position:{s.get("focus", "50% 50%")}"/>'
+    if style == "cinema":
+        bg = f'<div class="cine"><div class="band">{img}</div></div>'
+        t = f'<div class="k">{e(s.get("kicker", ""))}</div>'
+        t += f'<div class="badge">{e(s.get("badge", ""))}</div>' if s.get("badge") else '<div style="margin-top:auto"></div>'
+        t += f'<div class="t">{e(s["title"])}</div>'
+        if s.get("sub"): t += f'<div class="s">{e(s["sub"])}</div>'
+        # 사진 띠(430~1250) 위·아래에 글이 가도록: 위 kicker, 아래 자막
+        return bg + f'<div class="main safe-check"><div class="ov cinema" style="justify-content:space-between">{t}</div></div>'
+    bg = f'<div class="bleed">{img}<div class="g1"></div><div class="g2"></div></div>'
+    if style == "magazine":
+        t = f'<div class="k">{e(s.get("kicker", "")) or "&nbsp;"}</div><div class="t">{e(s["title"])}</div>'
+        if s.get("badge"): t += f'<div class="big">{e(s["badge"])}</div>'
+        else: t += '<div style="margin-top:auto"></div>'
+        if s.get("sub"): t += f'<div class="s">{e(s["sub"])}</div>'
+        return bg + f'<div class="main safe-check"><div class="ov magazine">{t}</div></div>'
+    t = f'<div class="k">{e(s.get("kicker", ""))}</div>' if s.get("kicker") else ""
+    if s.get("badge"): t += f'<div class="badge">{e(s["badge"])}</div>'
+    t += f'<div class="t">{e(s["title"])}</div>'
+    if s.get("sub"): t += f'<div class="s">{e(s["sub"])}</div>'
+    return bg + f'<div class="main safe-check"><div class="ov full">{t}</div></div>'
+
+def r_file(s, base):
+    b = f'<div class="kicker">{e(s.get("kicker", ""))}</div><div class="title s">{e(s["title"])}</div>'
+    b += ('<div class="filecard"><div class="ficon">' + "".join(f'<i style="top:{70 + k * 26}px"></i>' for k in range(4)) +
+          f'</div><div class="fname">{e(s["file"])}<small>{e(s.get("file_meta", ""))}</small></div></div>')
+    if s.get("sub"): b += f'<div class="fsub">{e(s["sub"])}</div>'
+    if s.get("small"): b += f'<div class="fsmall">{e(s["small"])}</div>'
+    return b
+
 def r_gallery(s, base):
     items = s["items"]
     b = head(s, "m", 30) + f'<div class="gal n{len(items)}">'
@@ -241,7 +313,7 @@ def r_gallery(s, base):
     if s.get("sub"): b += f'<div class="gsub">{e(s["sub"])}</div>'
     return b
 
-R = dict(scene=r_scene, gallery=r_gallery, hook=r_hook, tip=r_tip, table=r_table, bars=r_bars, photos=r_photos, steps=r_steps, summary=r_summary, outro=r_outro)
+R = dict(file=r_file, scene=r_scene, gallery=r_gallery, hook=r_hook, tip=r_tip, table=r_table, bars=r_bars, photos=r_photos, steps=r_steps, summary=r_summary, outro=r_outro)
 
 def render(cfg_path, out):
     cfg = json.loads(Path(cfg_path).read_text(encoding="utf-8"))
@@ -250,8 +322,12 @@ def render(cfg_path, out):
     t = theme(cfg.get("theme", "sohyun"))
     n = len(cfg["slides"]); used = set(); pages, pngs = [], []
     for i, s in enumerate(cfg["slides"], 1):
-        body = f'<div class="main safe-check">{R[s["type"]](s, base)}</div>' + sticker_html(s.get("sticker"), used, base)
-        hp = out / "png" / f"{i:02d}.html"; hp.write_text(frame(t, body, i, n, cfg["label"]), encoding="utf-8")
+        style = s.get("style", cfg.get("scene_style", "card")) if s["type"] == "scene" else "card"
+        if style in ("full", "magazine", "cinema"):
+            body = scene_full(s, base, style) + sticker_html(s.get("sticker"), used, base)
+        else:
+            body = f'<div class="main safe-check">{R[s["type"]](s, base)}</div>' + sticker_html(s.get("sticker"), used, base)
+        hp = out / "png" / f"{i:02d}.html"; hp.write_text(frame(t, body, i, n, cfg["label"], dark=style != "card"), encoding="utf-8")
         pages.append(hp); pngs.append(out / "png" / f"{i:02d}.png")
     print("장표 점검:")
     rep = shoot(pages, pngs, fit_sel=".main")
