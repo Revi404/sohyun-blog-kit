@@ -21,6 +21,7 @@ log.md
 maps/banner.py
 maps/fetch_tiles.py
 maps/route_map.py
+maps/stops_danang.json
 maps/stops_fukuoka.json
 stickers/01_heart.png
 stickers/02_peace.png
@@ -68,6 +69,6 @@ stickers_full/mini_05_joy.png
 stickers_full/mini_06_shy.png
 stickers_full/mini_07_grin.png
 thumbnail.py
+tools/mirror_manifest.txt
 tools/mrt_collect.py
 tools/raw_mirror.py
-tools/mirror_manifest.txt
