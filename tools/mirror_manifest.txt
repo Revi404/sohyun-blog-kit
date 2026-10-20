@@ -23,6 +23,7 @@ maps/fetch_tiles.py
 maps/route_map.py
 maps/stops_danang.json
 maps/stops_fukuoka.json
+maps/stops_gyeongju.json
 maps/stops_saipan.json
 stickers/01_heart.png
 stickers/02_peace.png
