@@ -25,6 +25,7 @@ maps/stops_bohol.json
 maps/stops_danang.json
 maps/stops_fukuoka.json
 maps/stops_gyeongju.json
+maps/stops_jeonju.json
 maps/stops_saipan.json
 richlab/archive.json
 richlab/calendar.json
