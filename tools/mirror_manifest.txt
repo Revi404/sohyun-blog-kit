@@ -24,6 +24,7 @@ maps/route_map.py
 maps/stops_bohol.json
 maps/stops_danang.json
 maps/stops_fukuoka.json
+maps/stops_guam.json
 maps/stops_gyeongju.json
 maps/stops_jeonju.json
 maps/stops_saipan.json
@@ -78,3 +79,4 @@ thumbnail.py
 tools/mirror_manifest.txt
 tools/mrt_collect.py
 tools/raw_mirror.py
+maps/stops_nhatrang.json
