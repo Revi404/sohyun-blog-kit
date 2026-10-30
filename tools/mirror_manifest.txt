@@ -7,6 +7,7 @@ cardnews/README.md
 cardnews/cardreel.py
 cardnews/common.py
 cardnews/tier.py
+cheongyak_pdf_extract.py
 cheongyak_table.py
 config.json
 fonts/IBMPlexSansKR-Bold.ttf
