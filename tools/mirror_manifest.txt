@@ -28,6 +28,7 @@ maps/stops_fukuoka.json
 maps/stops_guam.json
 maps/stops_gyeongju.json
 maps/stops_jeonju.json
+maps/stops_nhatrang.json
 maps/stops_saipan.json
 richlab/archive.json
 richlab/calendar.json
@@ -80,4 +81,3 @@ thumbnail.py
 tools/mirror_manifest.txt
 tools/mrt_collect.py
 tools/raw_mirror.py
-maps/stops_nhatrang.json
