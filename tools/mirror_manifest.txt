@@ -29,6 +29,7 @@ maps/stops_guam.json
 maps/stops_gyeongju.json
 maps/stops_jeonju.json
 maps/stops_nhatrang.json
+maps/stops_phuquoc.json
 maps/stops_saipan.json
 richlab/archive.json
 richlab/calendar.json
