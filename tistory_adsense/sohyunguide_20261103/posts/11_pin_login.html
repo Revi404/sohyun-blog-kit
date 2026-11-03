@@ -1,0 +1,57 @@
+<div class="sh-summary"><b>세줄요약</b><ul>
+<li>윈도우 11 PIN은 <b>설정 &gt; 계정 &gt; 로그인 옵션 &gt; PIN(Windows Hello)</b>에서 만들고 바꿀 수 있어요.</li>
+<li>PIN을 잊었다면 로그인 화면의 <b>PIN을 잊어버렸습니다</b>를 눌러 Microsoft 계정 비밀번호로 다시 설정해요.</li>
+<li>PIN은 그 PC에서만 쓰이는 번호라, 비밀번호보다 짧아도 원격 도용 위험이 낮아요.</li>
+</ul></div>
+<div class="sh-env"><span><b>확인 환경</b> 2026-11-03</span><span>윈도우 11 홈·프로</span><span>Microsoft 계정 · 로컬 계정</span></div>
+
+<p>PC를 켤 때마다 긴 비밀번호를 치는 게 번거로워서 PIN을 만들었는데, 오랜만에 켰더니 번호가 기억이 안 난다… 생각보다 흔한 일이에요 😓 PIN은 만드는 것도, 잊었을 때 다시 설정하는 것도 어렵지 않아요. 다만 <mark>Microsoft 계정 비밀번호</mark>는 알고 있어야 하니, 그 부분까지 같이 정리해 둘게요.</p>
+
+<h2>PIN이 비밀번호와 다른 점</h2>
+<div class="sh-tscroll"><table>
+<thead><tr><th>구분</th><th>PIN</th><th>Microsoft 계정 비밀번호</th></tr></thead>
+<tbody>
+<tr><td>쓰이는 곳</td><td>이 PC 하나에서만</td><td>모든 Microsoft 서비스(메일·원드라이브 등)</td></tr>
+<tr><td>저장 위치</td><td>PC 안의 보안 칩</td><td>Microsoft 서버</td></tr>
+<tr><td>유출 시 영향</td><td>그 PC 앞에 있어야만 쓸 수 있음</td><td>어디서든 로그인 시도 가능</td></tr>
+<tr><td>길이</td><td>숫자 4자리 이상</td><td>8자 이상 권장</td></tr>
+</tbody></table></div>
+<p>그래서 Microsoft는 PC 로그인에는 PIN을 쓰도록 권장해요. 비밀번호를 매번 입력하지 않으니 주변 사람이 어깨 너머로 볼 일도 줄어들어요.</p>
+
+<h2>PIN 새로 만들기</h2>
+<ol class="sh-steps">
+<li><b>Win + I</b> → <span class="sh-path">계정 &gt; 로그인 옵션</span>으로 들어가요.</li>
+<li><span class="sh-path">PIN(Windows Hello)</span>을 펼치고 <span class="sh-path">설정</span>을 눌러요.</li>
+<li>계정 비밀번호를 한 번 입력해 본인 확인을 해요.</li>
+<li>새 PIN을 두 번 입력하면 끝이에요 ✅</li>
+</ol>
+<div class="sh-tip">PIN 입력 창의 <b>문자 및 기호 포함</b>에 체크하면 숫자뿐 아니라 영문·기호도 섞을 수 있어요. 노트북을 밖에서 자주 쓴다면 이 방식을 추천해요.</div>
+
+<h2>PIN 바꾸기</h2>
+<p>같은 화면에서 <span class="sh-path">PIN(Windows Hello) &gt; PIN 변경</span>을 누르고, 지금 쓰는 PIN을 입력한 뒤 새 PIN을 정하면 돼요. 생일, 1234, 0000처럼 추측하기 쉬운 번호는 피하는 게 좋아요.</p>
+
+<h2>PIN을 잊어버렸을 때</h2>
+<ol class="sh-steps">
+<li>로그인 화면에서 PIN 입력칸 아래 <span class="sh-path">PIN을 잊어버렸습니다</span>를 눌러요.</li>
+<li>Microsoft 계정 비밀번호를 입력해요. (휴대폰·이메일 인증이 나올 수 있어요)</li>
+<li>본인 확인이 끝나면 새 PIN을 두 번 입력해요.</li>
+<li>바로 새 PIN으로 로그인돼요 ✅</li>
+</ol>
+<p>이미 로그인한 상태라면 <span class="sh-path">설정 &gt; 계정 &gt; 로그인 옵션 &gt; PIN &gt; PIN을 잊어버렸습니다</span>로 같은 과정을 진행할 수 있어요.</p>
+<div class="sh-warn">Microsoft 계정 비밀번호까지 잊었다면 다른 기기(휴대폰 등)로 Microsoft 계정 복구 절차를 먼저 진행해야 해요. 복구에 쓰는 휴대폰 번호·보조 이메일이 최신인지 평소에 확인해 두세요.</div>
+
+<h2>로컬 계정은 조금 달라요</h2>
+<p>Microsoft 계정이 아니라 PC 안에서만 쓰는 <b>로컬 계정</b>이라면 PIN 재설정 때 계정 비밀번호 대신, 처음 계정을 만들 때 정한 <b>보안 질문</b>에 답해야 해요. 보안 질문을 기억하지 못하면 PC에 있는 다른 관리자 계정으로 로그인해 비밀번호를 바꿔야 하니, 가족과 같이 쓰는 PC라면 관리자 계정을 하나 더 만들어 두면 든든해요.</p>
+
+<h2>얼굴·지문 로그인도 같이 설정하기</h2>
+<p>노트북에 적외선 카메라나 지문 센서가 있다면 같은 로그인 옵션 화면에 <b>얼굴 인식</b>과 <b>지문 인식</b> 항목이 나와요. 이 기능을 쓰려면 PIN이 먼저 만들어져 있어야 해요. 얼굴·지문 인식이 실패할 때도 PIN으로 바로 로그인할 수 있어서, 둘을 같이 켜 두면 가장 편해요.</p>
+
+<h2>자주 묻는 질문</h2>
+<h3>PIN 항목에서 ‘제거’ 버튼이 회색이에요</h3>
+<p>로그인 옵션 화면 위쪽의 <b>보안 향상을 위해 이 장치의 Microsoft 계정에 Windows Hello 로그인만 허용</b> 스위치가 켜져 있으면 PIN을 제거할 수 없어요. 이 스위치를 끄면 제거 버튼이 활성화돼요.</p>
+<h3>다른 사람에게 PIN을 알려 줘도 되나요?</h3>
+<p>PIN은 그 PC에 들어가는 열쇠라, 가족이라도 각자 계정을 따로 만들어 쓰는 쪽이 안전해요. <span class="sh-path">설정 &gt; 계정 &gt; 다른 사용자</span>에서 계정을 추가하면 바탕화면과 파일도 사람마다 분리돼요.</p>
+<h3>PIN을 여러 번 틀렸더니 잠겼어요</h3>
+<p>여러 번 연속으로 틀리면 잠시 입력이 막히고, 더 틀리면 화면에 안내 문구가 나와요. 안내대로 기다리거나 ‘PIN을 잊어버렸습니다’로 재설정하면 돼요.</p>
+
+<div class="sh-news">Microsoft 지원 문서 「Windows Hello 및 PIN」, 「PIN 재설정」 내용과 윈도우 11 설정 화면 기준으로 정리했어요 (2026-11-03 확인).</div>

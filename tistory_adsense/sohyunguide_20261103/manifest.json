@@ -1,0 +1,242 @@
+[
+ {
+  "no": 1,
+  "file": "posts/01_taskbar_left.html",
+  "title": "윈도우 11 작업 표시줄 왼쪽 정렬 방법, 시작 버튼 예전처럼 옮기기",
+  "tags": [
+   "윈도우11",
+   "작업표시줄",
+   "왼쪽정렬"
+  ],
+  "chars": 2189,
+  "links": 0
+ },
+ {
+  "no": 2,
+  "file": "posts/02_context_menu.html",
+  "title": "윈도우 11 오른쪽 클릭 메뉴 예전으로 되돌리기, 더 많은 옵션 없이 쓰는 법",
+  "tags": [
+   "윈도우11",
+   "오른쪽클릭메뉴",
+   "더많은옵션표시"
+  ],
+  "chars": 2176,
+  "links": 0
+ },
+ {
+  "no": 3,
+  "file": "posts/03_update_pause.html",
+  "title": "윈도우 11 업데이트 일시 중지·자동 재시작 끄는 방법",
+  "tags": [
+   "윈도우11",
+   "윈도우업데이트",
+   "자동재시작"
+  ],
+  "chars": 2197,
+  "links": 0
+ },
+ {
+  "no": 4,
+  "file": "posts/04_storage_sense.html",
+  "title": "윈도우 11 C 드라이브 용량 정리, 저장소 센스로 안전하게 비우기",
+  "tags": [
+   "윈도우11",
+   "C드라이브정리",
+   "저장소센스"
+  ],
+  "chars": 2212,
+  "links": 0
+ },
+ {
+  "no": 5,
+  "file": "posts/05_screenshot.html",
+  "title": "윈도우 11 화면 캡처 단축키 4가지, 저장 위치까지 정리",
+  "tags": [
+   "윈도우11",
+   "화면캡처",
+   "캡처단축키"
+  ],
+  "chars": 2138,
+  "links": 0
+ },
+ {
+  "no": 6,
+  "file": "posts/06_clipboard_history.html",
+  "title": "윈도우 11 클립보드 기록 Win+V, 여러 개 복사해서 골라 붙이기",
+  "tags": [
+   "윈도우11",
+   "클립보드기록",
+   "WinV"
+  ],
+  "chars": 2223,
+  "links": 0
+ },
+ {
+  "no": 7,
+  "file": "posts/07_sleep_screen.html",
+  "title": "윈도우 11 화면 꺼짐·절전 모드 시간 설정, 노트북 덮개 동작까지",
+  "tags": [
+   "윈도우11",
+   "절전모드",
+   "화면꺼짐"
+  ],
+  "chars": 2177,
+  "links": 0
+ },
+ {
+  "no": 8,
+  "file": "posts/08_default_browser.html",
+  "title": "윈도우 11 기본 브라우저 변경, 크롬으로 바꿨는데 엣지가 열릴 때",
+  "tags": [
+   "윈도우11",
+   "기본브라우저",
+   "엣지"
+  ],
+  "chars": 2163,
+  "links": 0
+ },
+ {
+  "no": 9,
+  "file": "posts/09_bluetooth.html",
+  "title": "윈도우 11 블루투스 연결 안 될 때 순서대로 점검하는 법",
+  "tags": [
+   "윈도우11",
+   "블루투스",
+   "연결오류"
+  ],
+  "chars": 2147,
+  "links": 0
+ },
+ {
+  "no": 10,
+  "file": "posts/10_no_sound.html",
+  "title": "윈도우 11 소리 안 날 때, 출력 장치부터 드라이버까지 점검 순서",
+  "tags": [
+   "윈도우11",
+   "소리안남",
+   "오디오"
+  ],
+  "chars": 2176,
+  "links": 0
+ },
+ {
+  "no": 11,
+  "file": "posts/11_pin_login.html",
+  "title": "윈도우 11 PIN 설정·변경, PIN 잊어버렸을 때 재설정 방법",
+  "tags": [
+   "윈도우11",
+   "PIN",
+   "윈도우로그인"
+  ],
+  "chars": 2162,
+  "links": 0
+ },
+ {
+  "no": 12,
+  "file": "posts/12_night_light.html",
+  "title": "윈도우 11 야간 모드 켜기, 블루라이트 줄이고 자동 예약까지",
+  "tags": [
+   "윈도우11",
+   "야간모드",
+   "블루라이트"
+  ],
+  "chars": 2167,
+  "links": 0
+ },
+ {
+  "no": 13,
+  "file": "posts/13_file_extension.html",
+  "title": "윈도우 11 파일 확장자 보이기·숨김 파일 표시 방법",
+  "tags": [
+   "윈도우11",
+   "파일확장자",
+   "숨김파일"
+  ],
+  "chars": 2217,
+  "links": 0
+ },
+ {
+  "no": 14,
+  "file": "posts/14_virtual_desktop.html",
+  "title": "윈도우 11 가상 데스크톱 사용법, 업무·개인 화면 나눠 쓰기",
+  "tags": [
+   "윈도우11",
+   "가상데스크톱",
+   "단축키"
+  ],
+  "chars": 2200,
+  "links": 0
+ },
+ {
+  "no": 15,
+  "file": "posts/15_snap_layout.html",
+  "title": "윈도우 11 화면 분할 스냅 레이아웃, 창 2·3·4개 나눠 쓰기",
+  "tags": [
+   "윈도우11",
+   "화면분할",
+   "스냅레이아웃"
+  ],
+  "chars": 2096,
+  "links": 0
+ },
+ {
+  "no": 16,
+  "file": "posts/16_printer.html",
+  "title": "윈도우 11 프린터 연결·기본 프린터 설정, 인쇄 멈췄을 때 해결",
+  "tags": [
+   "윈도우11",
+   "프린터연결",
+   "기본프린터"
+  ],
+  "chars": 2141,
+  "links": 0
+ },
+ {
+  "no": 17,
+  "file": "posts/17_wifi_drop.html",
+  "title": "윈도우 11 와이파이 자꾸 끊길 때 해결 방법 5단계",
+  "tags": [
+   "윈도우11",
+   "와이파이끊김",
+   "네트워크초기화"
+  ],
+  "chars": 2131,
+  "links": 0
+ },
+ {
+  "no": 18,
+  "file": "posts/18_task_manager.html",
+  "title": "윈도우 11 작업 관리자 여는 법, 응답 없음 프로그램 강제 종료",
+  "tags": [
+   "윈도우11",
+   "작업관리자",
+   "응답없음"
+  ],
+  "chars": 2187,
+  "links": 0
+ },
+ {
+  "no": 19,
+  "file": "posts/19_battery.html",
+  "title": "윈도우 11 노트북 배터리 사용량 확인·절약 모드, 배터리 수명 보고서",
+  "tags": [
+   "윈도우11",
+   "배터리",
+   "노트북"
+  ],
+  "chars": 2178,
+  "links": 0
+ },
+ {
+  "no": 20,
+  "file": "posts/20_reset_pc.html",
+  "title": "윈도우 11 초기화 방법, 내 파일 유지와 모든 항목 제거 차이",
+  "tags": [
+   "윈도우11",
+   "PC초기화",
+   "포맷"
+  ],
+  "chars": 2151,
+  "links": 0
+ }
+]
