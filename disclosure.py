@@ -123,63 +123,38 @@ def draw_line(d, x, y, line, f, color, size):
 
 
 def render(blocks, extras, out):
-    """blocks: [(badge, text)], extras: [str]"""
+    """blocks: [(badge, text)], extras: [str] — 얇은 작은 글씨 1~2줄 배너(2026-11-05 대표 지시: 딱지·강조 없이 은은하게)"""
     s = SS
     probe = ImageDraw.Draw(Image.new("RGB", (10, 10)))
-    inner = (W - PAD * 2 - 54 - 44) * s
-    fb, fm, fbadge, fcap = font("Bold", 34 * s), font("Medium", 27 * s), font("ExtraBold", 26 * s), font("Medium", 22 * s)
-    lh_main, lh_extra = int(34 * 1.55 * s), int(27 * 1.6 * s)
-
-    badges = []
-    for b, _ in blocks:
-        if b not in badges:
-            badges.append(b)
-    main_lines = [wrap(probe, t, fb, inner) for _, t in blocks]
-    extra_lines = [wrap(probe, t, fm, inner) for t in extras]
+    size = 26
+    f = font("Medium", size * s)
+    lh = int(size * 1.6 * s)
+    x0 = (PAD + 40) * s
+    mark_w = 44
+    inner = (W - PAD * 2 - 40 - 32 - mark_w - 24) * s
+    texts = [plain(t) for _, t in blocks] + [plain(e) for e in extras]
+    lines = wrap(probe, " ".join(texts), f, inner)
 
     card_top = PAD * s
-    y = card_top + 40 * s + 50 * s + 26 * s   # 위 여백 + 딱지 줄 + 간격
-    body_h = sum(len(ls) * lh_main for ls in main_lines) + (len(main_lines) - 1) * 14 * s
-    if extra_lines:
-        body_h += 22 * s + 2 * s + 22 * s + sum(len(ls) * lh_extra for ls in extra_lines)
-    card_bot = y + body_h + 34 * s
+    body_h = len(lines) * lh
+    card_bot = card_top + 26 * s + body_h + 22 * s
     H = card_bot + PAD * s
 
     img = Image.new("RGB", (W * s, H), CARD)   # 네이버 블로그 흰 바탕에 맞춤
     d = ImageDraw.Draw(img)
-    d.rounded_rectangle([PAD * s, card_top, (W - PAD) * s, card_bot], radius=28 * s, fill=ACCENT_DEEP)
-    d.rounded_rectangle([PAD * s + 10 * s, card_top, (W - PAD) * s, card_bot], radius=26 * s, fill=PAPER2, outline=LINE, width=2 * s)
+    d.rounded_rectangle([PAD * s, card_top, (W - PAD) * s, card_bot], radius=20 * s, fill=ACCENT_DEEP)
+    d.rounded_rectangle([PAD * s + 6 * s, card_top, (W - PAD) * s, card_bot], radius=19 * s, fill=PAPER2, outline=LINE, width=2 * s)
 
-    # 딱지 줄
-    x0 = (PAD + 54) * s
-    bx, by = x0, card_top + 40 * s
-    for b in badges:
-        tw = d.textlength(f"[{b}]", font=fbadge)
-        d.rounded_rectangle([bx, by, bx + tw + 36 * s, by + 50 * s], radius=25 * s, fill=BADGE_COLOR.get(b, CORAL))
-        d.text((bx + 18 * s, by + 25 * s), f"[{b}]", font=fbadge, fill=CARD, anchor="lm")
-        bx += tw + 36 * s + 12 * s
-    d.text((bx + 6 * s, by + 25 * s), "경제적 이해관계 표시", font=fcap, fill=INK_SOFT, anchor="lm")
+    y = card_top + 26 * s
+    for ln in lines:
+        d.text((x0, y), plain(ln), font=f, fill=INK_SOFT)
+        y += lh
     mark = HERE / "brand/mark.png"
     if mark.exists():
         m = Image.open(mark).convert("RGBA")
-        mh = 46 * s
+        mh = 36 * s
         m = m.resize((int(m.width * mh / m.height), mh), Image.LANCZOS)
-        img.paste(m, ((W - PAD - 40) * s - m.width, by + 2 * s), m)
-
-    for i, ls in enumerate(main_lines):
-        if i:
-            y += 14 * s
-        for ln in ls:
-            draw_line(d, x0, y, ln, fb, INK, 34 * s)
-            y += lh_main
-    if extra_lines:
-        y += 22 * s
-        d.line([x0, y, (W - PAD - 44) * s, y], fill=LINE, width=2 * s)
-        y += 2 * s + 22 * s
-        for ls in extra_lines:
-            for ln in ls:
-                draw_line(d, x0, y, ln, fm, INK_SOFT, 27 * s)
-                y += lh_extra
+        img.paste(m, ((W - PAD - 32) * s - m.width, (card_top + card_bot) // 2 - mh // 2), m)
 
     img = img.resize((W, H // s), Image.LANCZOS)
     out = Path(out)
