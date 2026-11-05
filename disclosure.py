@@ -1,17 +1,14 @@
 #!/usr/bin/env python3
 """
 협찬·광고 고지(공정위 경제적 이해관계 표시) 이미지 생성기 — 블로그 본문 맨 위에 넣는 가로 배너
-사용법:
-  python3 disclosure.py --list                                   # 문구 목록 보기
-  python3 disclosure.py --preset brandconnect --brand 아르페 --out disclosure/out/20261105_아르페.png
-  python3 disclosure.py --preset experience --brand 수수햄부대찌개 --platform 레뷰 --out ...
-  python3 disclosure.py --preset brandconnect-fee --preset coupang --out ...   # 여러 문구 겹치기
-  python3 disclosure.py --preset brandconnect --brand 아르페 \
-      --extra "본 콘텐츠는 아르페 제품을 체험하고 솔직하게 작성한 후기입니다." --out ...  # 캠페인 지정 문구 추가
-  python3 disclosure.py --badge 협찬 --text "직접 쓴 문구 ({brand} 강조 가능)" --brand OO --out ...
+사용법 (이미지 한 장 = 문구 한 줄이 기본):
+  python3 disclosure.py --list                                              # 문구 목록·출처 보기
+  python3 disclosure.py --preset review --brand 아르페 --out disclosure/out/20261105_아르페.png
+  python3 disclosure.py --preset shoppingconnect --out ...
+  python3 disclosure.py --text "캠페인 가이드 지정 문구 원문" --out ...         # 가이드 문구가 있으면 이걸로
 옵션:
   --josa 로|으로 : 브랜드가 영문·숫자로 끝나 '으로/로'를 자동으로 못 고를 때 지정
-  --text-line    : 본문 첫 줄에 같이 넣을 텍스트 문구만 출력(이미지 안 만듦)
+  --text-line    : 이미지 대체텍스트로 쓸 문구만 출력(이미지 안 만듦)
 문구는 disclosure/presets.json 에서 고친다. 필요: pip install pillow
 """
 import argparse, json, re, sys
@@ -190,30 +187,27 @@ def main():
     if a.list:
         for k, v in PRESETS.items():
             if not k.startswith("_"):
-                print(f"{k:18} [{v['badge']}] {v['label']}\n{'':18} {v['text']}")
+                print(f"{k:16} {v['label']}  (출처: {v['source']})\n{'':16} {v['text']}")
         return
     blocks = []
     for p in a.preset:
         if p not in PRESETS or p.startswith("_"):
             sys.exit(f"없는 문구: {p} (목록: python3 disclosure.py --list)")
-        blocks.append((PRESETS[p]["badge"], fill(PRESETS[p]["text"], a.brand, a.platform, a.josa)))
+        blocks.append(("", fill(PRESETS[p]["text"], a.brand, a.platform, a.josa)))
     if a.text:
-        if not a.badge:
-            sys.exit("--text 를 쓸 때는 --badge 광고|협찬 을 같이 지정하세요.")
-        blocks.append((a.badge, fill(a.text, a.brand, a.platform, a.josa)))
+        blocks.append((a.badge or "", fill(a.text, a.brand, a.platform, a.josa)))
     if not blocks:
         sys.exit("--preset 또는 --text 가 필요합니다.")
     extras = [fill(e, a.brand, a.platform, a.josa) for e in a.extra]
 
-    badges = "/".join(dict.fromkeys(b for b, _ in blocks))
-    line = f"[{badges}] " + " ".join(plain(t) for _, t in blocks)
+    line = " ".join(plain(t) for _, t in blocks)
     if a.text_line:
         print(line); return
     if not a.out:
         sys.exit("--out 경로가 필요합니다.")
     w, h = render(blocks, extras, a.out)
     print(f"저장: {a.out} ({w}x{h})")
-    print(f"텍스트 병기용: {line}")
+    print(f"대체텍스트: {line}")
 
 if __name__ == "__main__":
     main()

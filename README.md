@@ -5,7 +5,7 @@
 | 파일 | 용도 |
 |---|---|
 | `thumbnail.py` | 소현생정 디자인 시스템(새싹 팔레트) 대표 이미지(1080x1350) 생성. `--mark`로 1줄 형광펜 단어 지정(기본: 마지막 단어, `-`면 없음) |
-| `disclosure.py` | 협찬·광고 고지(공정위 경제적 이해관계 표시) 배너 이미지(가로 1080). 문구는 `disclosure/presets.json`, 견본은 `disclosure/examples/`. `--list`로 문구 목록, `--preset <이름> --brand <브랜드>`로 생성 |
+| `disclosure.py` | 협찬·광고 고지(공정위 경제적 이해관계 표시) 배너 이미지(가로 1080). 문구(출처 확인된 것만)는 `disclosure/presets.json`, 견본은 `disclosure/examples/`. `--list`로 문구 목록, `--preset <이름> --brand <브랜드>`로 생성 |
 | `fonts/` | Pretendard Medium·Bold·ExtraBold (SIL OFL 1.1, `fonts/Pretendard-OFL.txt`) — 썸네일 사용 서체. IBM Plex Sans KR(`fonts/OFL.txt`)은 이전 양식용으로 보관 |
 | `thumbs/` | 블로그에 올릴 대표 이미지. uplika가 raw 주소로 내려받음 |
 | `thumbs/jobs/*.json` | 사진 넣은 썸네일 주문서. push 하면 GitHub Action(`.github/workflows/thumbnail.yml`)이 사진을 내려받아 `thumbs/<같은 이름>.jpg`를 만들어 커밋 |
