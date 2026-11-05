@@ -122,22 +122,32 @@ def draw_line(d, x, y, line, f, color, size):
         cx += w
 
 
+def sentences(text):
+    """'...다.' 로 끝나는 문장마다 끊는다(한 문장 = 한 줄)."""
+    return [x.strip() for x in re.split(r"(?<=[다요]\.)\s+", text) if x.strip()]
+
+
 def render(blocks, extras, out):
-    """blocks: [(badge, text)], extras: [str] — 얇은 작은 글씨 1~2줄 배너(2026-11-05 대표 지시: 딱지·강조 없이 은은하게)"""
+    """blocks: [(badge, text)], extras: [str]
+    2026-11-05 대표 지시: 딱지·강조 없이 얇은 작은 글씨, 한 문장은 한 줄(넘치면 글씨를 줄여 맞춘다)"""
     s = SS
     probe = ImageDraw.Draw(Image.new("RGB", (10, 10)))
-    size = 26
-    f = font("Medium", size * s)
-    lh = int(size * 1.6 * s)
+    lines = []
+    for t in [plain(t) for _, t in blocks] + [plain(e) for e in extras]:
+        lines += sentences(t)
     x0 = (PAD + 40) * s
-    mark_w = 44
-    inner = (W - PAD * 2 - 40 - 32 - mark_w - 24) * s
-    texts = [plain(t) for _, t in blocks] + [plain(e) for e in extras]
-    lines = wrap(probe, " ".join(texts), f, inner)
+    mark_w = 36
+    inner = (W - PAD * 2 - 40 - 28 - mark_w - 20) * s
+    size = 26
+    while size > 18 and max(probe.textlength(l, font=font("Medium", size * s)) for l in lines) > inner:
+        size -= 1
+    if max(probe.textlength(l, font=font("Medium", size * s)) for l in lines) > inner:
+        sys.exit("문장이 너무 길어 한 줄에 안 들어갑니다(18px 기준). 문구를 줄이거나 두 문장으로 나눠 주세요.")
+    f = font("Medium", size * s)
+    lh = int(size * 1.65 * s)
 
     card_top = PAD * s
-    body_h = len(lines) * lh
-    card_bot = card_top + 26 * s + body_h + 22 * s
+    card_bot = card_top + 24 * s + len(lines) * lh + 20 * s
     H = card_bot + PAD * s
 
     img = Image.new("RGB", (W * s, H), CARD)   # 네이버 블로그 흰 바탕에 맞춤
@@ -145,16 +155,16 @@ def render(blocks, extras, out):
     d.rounded_rectangle([PAD * s, card_top, (W - PAD) * s, card_bot], radius=20 * s, fill=ACCENT_DEEP)
     d.rounded_rectangle([PAD * s + 6 * s, card_top, (W - PAD) * s, card_bot], radius=19 * s, fill=PAPER2, outline=LINE, width=2 * s)
 
-    y = card_top + 26 * s
+    y = card_top + 24 * s
     for ln in lines:
-        d.text((x0, y), plain(ln), font=f, fill=INK_SOFT)
+        d.text((x0, y), ln, font=f, fill=INK_SOFT)
         y += lh
     mark = HERE / "brand/mark.png"
     if mark.exists():
         m = Image.open(mark).convert("RGBA")
-        mh = 36 * s
+        mh = 34 * s
         m = m.resize((int(m.width * mh / m.height), mh), Image.LANCZOS)
-        img.paste(m, ((W - PAD - 32) * s - m.width, (card_top + card_bot) // 2 - mh // 2), m)
+        img.paste(m, ((W - PAD - 28) * s - m.width, (card_top + card_bot) // 2 - mh // 2), m)
 
     img = img.resize((W, H // s), Image.LANCZOS)
     out = Path(out)
