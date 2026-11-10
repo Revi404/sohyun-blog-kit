@@ -15,10 +15,10 @@ SAFE_TOP, SAFE_BOTTOM = 240, 1680          # 3:4 안전 영역 (높이 1440)
 THEMES = {
     "sohyun": dict(paper="#F4F2E9", ink="#16150F", soft_ink="#595750", accent="#1E9150", deep="#0C5230",
                    soft="#E6F1E2", hl="#CDEE5C", hl_ink="#16150F", coral="#E0563B", coral_soft="#FAE4DC",
-                   line="#DEDBCF", brand="소현생정", sub="소비를 현명하게", handle="@sohyun_guide"),
-    "richlab": dict(paper="#F1F3F6", ink="#111827", soft_ink="#4B5563", accent="#2457C5", deep="#0F2747",
+                   line="#DEDBCF", brand="소현생정", sub="소비를 현명하게", handle="@sohyun_guide", mark="mark.png"),
+    "richlab": dict(paper="#F1F3F6", ink="#111827", soft_ink="#4B5563", accent="#2457D6", deep="#0F2747",
                     soft="#E3EAF6", hl="#F5C542", hl_ink="#111827", coral="#E0563B", coral_soft="#FBE6DF",
-                    line="#D6DCE5", brand="소현리치랩", sub="소득을 현명하게", handle="@sohyun_richlab"),
+                    line="#D6DCE5", brand="소현리치랩", sub="소득을 현명하게", handle="@sohyun_richlab", mark="mark_richlab.png"),
 }
 
 def theme(name_or_dict):
@@ -27,7 +27,7 @@ def theme(name_or_dict):
     return dict(THEMES[name_or_dict or "sohyun"])
 
 def css_vars(t):
-    return ";".join(f"--{k}:{v}" for k, v in t.items() if k not in ("brand", "sub", "handle", "base"))
+    return ";".join(f"--{k}:{v}" for k, v in t.items() if k not in ("brand", "sub", "handle", "base", "mark"))
 
 def font_css():
     F = FONTS.resolve().as_uri()
