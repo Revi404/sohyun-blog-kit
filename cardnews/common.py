@@ -18,7 +18,7 @@ THEMES = {
                    line="#DEDBCF", brand="소현생정", sub="소비를 현명하게", handle="@sohyun_guide"),
     "richlab": dict(paper="#F1F3F6", ink="#111827", soft_ink="#4B5563", accent="#2457C5", deep="#0F2747",
                     soft="#E3EAF6", hl="#F5C542", hl_ink="#111827", coral="#E0563B", coral_soft="#FBE6DF",
-                    line="#D6DCE5", brand="소현생정 리치랩", sub="소득을 현명하게", handle="@sohyun_richlab"),
+                    line="#D6DCE5", brand="소현리치랩", sub="소득을 현명하게", handle="@sohyun_richlab"),
 }
 
 def theme(name_or_dict):
