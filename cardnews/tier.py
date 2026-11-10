@@ -34,7 +34,7 @@ from common import *  # noqa
 
 DEFAULT_COLORS = {
     "sohyun": ["#E0563B", "#1E9150", "#C9A227", "#8A8F86", "#B7B9B1"],
-    "richlab": ["#F5C542", "#2457C5", "#5B7BC4", "#7C8798", "#A9B1BE"],
+    "richlab": ["#F5C542", "#2457D6", "#5B7BC4", "#7C8798", "#A9B1BE"],
 }
 DEFAULT_FG = {"#F5C542": "#111827"}
 
@@ -154,7 +154,7 @@ def build(cfg, base):
     tbtop = cfg.get("table_top", 330)
     html = f"""<!doctype html><html><head><meta charset="utf-8"><style>{font_css()}{CSS}</style></head>
 <body style="{css_vars(t)};--cols:{cfg.get('columns', 5)};--tbtop:{tbtop}px"><div class="blob"></div>
-<div class="hd"><div class="brand"><img src="{uri(BRAND / 'mark.png')}"/>{e(t['brand'])}<small>{e(t['sub'])}</small></div><div class="pill">{e(cfg.get('label', '티어표'))}</div></div>
+<div class="hd"><div class="brand"><img src="{uri(BRAND / t.get('mark', 'mark.png'))}"/>{e(t['brand'])}<small>{e(t['sub'])}</small></div><div class="pill">{e(cfg.get('label', '티어표'))}</div></div>
 <div class="ti"><div class="k">{e(cfg.get('kicker', ''))}</div><h1>{e(cfg['title'])}</h1>{"<div class=sub>" + e(cfg['sub']) + "</div>" if cfg.get('sub') else ""}</div>
 {st}
 <div class="tb" id="tb">{rows}</div>

@@ -170,7 +170,7 @@ def frame(t, body, page, total, label, dark=False):
     return f"""<!doctype html><html><head><meta charset="utf-8"><style>{font_css()}{CSS}{DARK if dark else ""}</style></head>
 <body style="{css_vars(t)}"><div class="blob"></div>
 {body}
-<div class="top safe-check"><div class="brand"><img src="{uri(BRAND / 'mark.png')}"/>{e(t['brand'])}<small>{e(t['sub'])}</small></div><div class="pill">{e(label)}<span>{page}/{total}</span></div></div>
+<div class="top safe-check"><div class="brand"><img src="{uri(BRAND / t.get('mark', 'mark.png'))}"/>{e(t['brand'])}<small>{e(t['sub'])}</small></div><div class="pill">{e(label)}<span>{page}/{total}</span></div></div>
 </body></html>"""
 
 POS = {"br": (None, 64, None, SAFE_BOTTOM), "bl": (64, None, None, SAFE_BOTTOM), "tr": (None, 60, SAFE_TOP + 120, None),
