@@ -41,12 +41,21 @@ LINE        = (217, 215, 206)   # line rgba(22,21,15,.12) on paper
 RICH_BLUE      = (36, 87, 214)    # #2457D6
 RICH_BLUE_SOFT = (110, 146, 236)  # #6E92EC
 RICH_YELLOW    = (245, 197, 66)   # #F5C542
+SHADOW         = (16, 28, 18)
+
+# 리치랩 테마: 위 토큰을 이 값으로 바꿔 그린다 (cardnews richlab 테마: paper #F1F3F6, ink #111827, soft #E3EAF6, line #D6DCE5)
+RICHLAB_TOKENS = dict(
+    PAPER=(241, 243, 246), PAPER2=(248, 249, 251), INK=(17, 24, 39), INK_SOFT=(75, 85, 99),
+    ACCENT=RICH_BLUE, ACCENT_DEEP=(15, 39, 71), ACCENT_SOFT=(227, 234, 246), HIGHLIGHT=RICH_YELLOW,
+    ON_ACCENT=(255, 255, 255), AMBER=RICH_YELLOW, LINE=(214, 220, 229), SHADOW=(15, 39, 71),
+)
 
 W, H = 1080, 1350
 PHOTO_H = 820
 PANEL_Y = 764
 GUT = 64
 SS = 3  # 도형 안티앨리어싱용 슈퍼샘플링 배율
+SPROUT = {}  # 새싹 색 (테마별, 비면 기본 초록)
 
 
 def fit(d, text, maxw, size, weight, floor=48):
@@ -64,8 +73,9 @@ def _bez(p0, p1, p2, p3, n=24):
     return out
 
 
-def sprout(size, stem=ACCENT_DEEP, leaf1=ACCENT, leaf2=ACCENT_DEEP):
+def sprout(size, stem=None, leaf1=None, leaf2=None):
     """새싹 마크 (viewBox 32) → RGBA 이미지"""
+    stem, leaf1, leaf2 = stem or ACCENT_DEEP, leaf1 or ACCENT, leaf2 or ACCENT_DEEP
     s = size * SS / 32
     im = Image.new("RGBA", (size * SS, size * SS), (0, 0, 0, 0)); g = ImageDraw.Draw(im)
     P = lambda pts: [(x * s, y * s) for x, y in pts]
@@ -105,7 +115,7 @@ def placeholder(pw, ph):
     g.ellipse((pw * 0.42 * k, -ph * 0.25 * k, pw * 1.15 * k, ph * 0.95 * k), fill=255)
     m = big.resize((pw, ph), Image.LANCZOS)
     p.paste(Image.new("RGB", (pw, ph), PAPER2), (0, 0), m)
-    sp = sprout(300)
+    sp = sprout(300, **SPROUT)
     p.paste(sp, (int(pw * 0.62), int(ph * 0.18)), sp)
     dots = Image.new("RGBA", (pw * SS // 2, ph * SS // 2), (0, 0, 0, 0)); g = ImageDraw.Draw(dots)
     for cx, cy, r, c in [(0.12, 0.62, 0.16, ACCENT_DEEP), (0.30, 0.78, 0.06, CORAL), (0.40, 0.60, 0.04, AMBER)]:
@@ -125,13 +135,13 @@ def main():
                     help="브랜드 테마 (기본: --tag 에 '소현리치랩'이 있으면 richlab, 아니면 sohyun)")
     a = ap.parse_args()
     theme = a.theme or ("richlab" if "소현리치랩" in a.tag else "sohyun")
-    if theme == "richlab":   # 리치랩 블루 #2457D6 · 파란 새싹 · 노랑 형광펜 (2026-11-10 대표 지시)
-        tag_bg, hl = RICH_BLUE, RICH_YELLOW
-        sp_colors = dict(stem=RICH_BLUE, leaf1=RICH_BLUE, leaf2=RICH_BLUE_SOFT)
+    if theme == "richlab":   # 리치랩 BI: 회청 종이 · 리치랩 블루 #2457D6 · 파란 새싹 · 노랑 형광펜 (2026-11-10 대표 지시)
+        globals().update(RICHLAB_TOKENS)
+        SPROUT.update(stem=RICH_BLUE, leaf1=RICH_BLUE, leaf2=RICH_BLUE_SOFT)
+        tag_bg, hl = RICH_BLUE, HIGHLIGHT
         footer = "소현리치랩 · 소득을 현명하게"
     else:
         tag_bg, hl = ACCENT_DEEP, HIGHLIGHT
-        sp_colors = {}
         footer = "소현생정 · 소비를 현명하게"
 
     im = Image.new("RGB", (W, H), PAPER)
@@ -147,7 +157,7 @@ def main():
     sh = Image.new("L", (W, H), 0)
     ImageDraw.Draw(sh).rounded_rectangle((0, PANEL_Y - 6, W, H + 60), radius=56, fill=70)
     sh = sh.filter(ImageFilter.GaussianBlur(14))
-    im.paste(Image.new("RGB", (W, H), (16, 28, 18)), (0, 0), sh.point(lambda v: v * 0.35))
+    im.paste(Image.new("RGB", (W, H), SHADOW), (0, 0), sh.point(lambda v: v * 0.35))
     pm = Image.new("L", (W * SS, (H - PANEL_Y + 60) * SS), 0)
     ImageDraw.Draw(pm).rounded_rectangle((0, 0, W * SS, (H - PANEL_Y + 60) * SS), radius=56 * SS, fill=255)
     pm = pm.resize((W, H - PANEL_Y + 60), Image.LANCZOS)
@@ -195,7 +205,7 @@ def main():
         for t in items:
             cx += chip(im, (cx, cy), t, size, PAPER, INK, border=LINE) + 12
     # 8) 푸터: 새싹 + 브랜드
-    sp = sprout(34, **sp_colors)
+    sp = sprout(34, **SPROUT)
     im.paste(sp, (GUT - 4, H - 70), sp)
     d.text((GUT + 36, H - 53), footer, font=font("Bold", 24), fill=INK_SOFT, anchor="lm")
 
