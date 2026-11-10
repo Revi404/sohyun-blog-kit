@@ -37,6 +37,10 @@ ON_ACCENT   = (251, 255, 246)
 CORAL       = (224, 86, 59)     # #E0563B
 AMBER       = (255, 194, 77)
 LINE        = (217, 215, 206)   # line rgba(22,21,15,.12) on paper
+# 소현리치랩 (cardnews richlab 테마와 같은 값)
+RICH_BLUE      = (36, 87, 214)    # #2457D6
+RICH_BLUE_SOFT = (110, 146, 236)  # #6E92EC
+RICH_YELLOW    = (245, 197, 66)   # #F5C542
 
 W, H = 1080, 1350
 PHOTO_H = 820
@@ -117,7 +121,18 @@ def main():
     ap.add_argument("--kicker", default=""); ap.add_argument("--line1", required=True); ap.add_argument("--line2", default="")
     ap.add_argument("--note", default=""); ap.add_argument("--mark", default=None)
     ap.add_argument("--photo"); ap.add_argument("--out", required=True)
+    ap.add_argument("--theme", choices=["sohyun", "richlab"], default=None,
+                    help="브랜드 테마 (기본: --tag 에 '소현리치랩'이 있으면 richlab, 아니면 sohyun)")
     a = ap.parse_args()
+    theme = a.theme or ("richlab" if "소현리치랩" in a.tag else "sohyun")
+    if theme == "richlab":   # 리치랩 블루 #2457D6 · 파란 새싹 · 노랑 형광펜 (2026-11-10 대표 지시)
+        tag_bg, hl = RICH_BLUE, RICH_YELLOW
+        sp_colors = dict(stem=RICH_BLUE, leaf1=RICH_BLUE, leaf2=RICH_BLUE_SOFT)
+        footer = "소현리치랩 · 소득을 현명하게"
+    else:
+        tag_bg, hl = ACCENT_DEEP, HIGHLIGHT
+        sp_colors = {}
+        footer = "소현생정 · 소비를 현명하게"
 
     im = Image.new("RGB", (W, H), PAPER)
     # 1) 사진 영역
@@ -140,7 +155,7 @@ def main():
 
     # 3) 좌상단 칩: 태그(딥그린) + 분류(흰색)
     x = GUT
-    x += chip(im, (x, GUT), a.tag, 28, ACCENT_DEEP, ON_ACCENT) + 12
+    x += chip(im, (x, GUT), a.tag, 28, tag_bg, ON_ACCENT) + 12
     if a.right:
         chip(im, (x, GUT), a.right, 28, CARD, INK)
 
@@ -160,7 +175,7 @@ def main():
         i = a.line1.rfind(mark)
         x0 = GUT + d.textlength(a.line1[:i], font=f1)
         x1 = x0 + d.textlength(mark, font=f1)
-        d.rectangle((x0 - sz * 0.04, y + sz * 0.50, x1 + sz * 0.04, y + sz * 0.90), fill=HIGHLIGHT)
+        d.rectangle((x0 - sz * 0.04, y + sz * 0.50, x1 + sz * 0.04, y + sz * 0.90), fill=hl)
     d.text((GUT, y), a.line1, font=f1, fill=INK, anchor="lt")
     y += round(sz * 1.12)
     # 6) 2줄 (coral, 결론·숫자)
@@ -179,10 +194,10 @@ def main():
         cx, cy = GUT, max(y + 28, 1150)
         for t in items:
             cx += chip(im, (cx, cy), t, size, PAPER, INK, border=LINE) + 12
-    # 8) 푸터: 새싹 + 소현생정
-    sp = sprout(34)
+    # 8) 푸터: 새싹 + 브랜드
+    sp = sprout(34, **sp_colors)
     im.paste(sp, (GUT - 4, H - 70), sp)
-    d.text((GUT + 36, H - 53), "소현생정 · 소비를 현명하게", font=font("Bold", 24), fill=INK_SOFT, anchor="lm")
+    d.text((GUT + 36, H - 53), footer, font=font("Bold", 24), fill=INK_SOFT, anchor="lm")
 
     Path(a.out).parent.mkdir(parents=True, exist_ok=True)
     im.save(a.out, quality=95); print(a.out)
