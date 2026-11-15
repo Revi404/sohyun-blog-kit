@@ -7,6 +7,7 @@
   --name   단지 약칭 (예: 트리븐센텀 1단지)
   --date   모집공고일 YYYY.MM.DD
   --out    출력 PNG 경로
+  --theme  sohyun(기본) | richlab — 리치랩 BI 색(회청 종이·리치랩 블루 #2457D6·빨강 #E0563B)과 '[소현리치랩] 청약노트' 뱃지
 """
 import argparse, json, csv
 from pathlib import Path
@@ -35,6 +36,12 @@ BG = "#F4F1EA"          # 배경 paper
 ALT = "#E7EFE3"         # 교대 행 연녹색
 INK = "#151515"         # 본문 텍스트
 GRAY = "#5B5B5B"        # 주석 텍스트
+TAG = "[소현생정] 청약노트"
+TAG_W = 250
+
+# 리치랩 테마 (thumbnail.py RICHLAB_TOKENS·cardnews richlab 테마와 같은 값, 2026-11-15 대표 지시)
+RICHLAB = dict(GREEN="#2457D6", CORAL="#E0563B", BG="#F1F3F6", ALT="#E3EAF6",
+               INK="#111827", GRAY="#4B5563", TAG="[소현리치랩] 청약노트", TAG_W=290)
 
 
 def main():
@@ -44,7 +51,10 @@ def main():
     ap.add_argument("--name", required=True)
     ap.add_argument("--date", required=True)
     ap.add_argument("--out", required=True)
+    ap.add_argument("--theme", choices=["sohyun", "richlab"], default="sohyun")
     a = ap.parse_args()
+    if a.theme == "richlab":
+        globals().update(RICHLAB)
 
     with open(a.rows, "r", encoding="utf-8-sig") as f:
         reader = csv.DictReader(f)
@@ -102,8 +112,8 @@ def main():
     dr = ImageDraw.Draw(im)
 
     # 상단 뱃지 & 타이틀
-    dr.rounded_rectangle([x0, pad, x0 + 250, pad + 44], radius=22, fill=GREEN)
-    dr.text((x0 + 24, pad + 6), "[소현생정] 청약노트", font=get_font(bold=True, size=22), fill="white")
+    dr.rounded_rectangle([x0, pad, x0 + TAG_W, pad + 44], radius=22, fill=GREEN)
+    dr.text((x0 + 24, pad + 6), TAG, font=get_font(bold=True, size=22), fill="white")
     dr.text((x0, pad + 62), f"{a.name} 주택형별 공급금액", font=get_font(bold=True, size=36), fill=INK)
 
     y = pad + 130
